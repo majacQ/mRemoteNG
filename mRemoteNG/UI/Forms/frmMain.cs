@@ -23,12 +23,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using mRemoteNG.UI.Panels;
 using WeifenLuo.WinFormsUI.Docking;
-using mRemoteNG.UI.Controls;
 using Settings = mRemoteNG.Properties.Settings;
 using mRemoteNG.Resources.Language;
 
@@ -38,11 +36,9 @@ namespace mRemoteNG.UI.Forms
 {
     public partial class FrmMain
     {
-        public static FrmMain Default { get; } = new FrmMain();
+        public static FrmMain Default { get; } = new();
 
         private static ClipboardchangeEventHandler _clipboardChangedEvent;
-        private bool _inSizeMove;
-        private bool _inMouseActivate;
         private IntPtr _fpChainedWindowHandle;
         private bool _usingSqlServer;
         private string _connectionsFileName;
@@ -51,7 +47,7 @@ namespace mRemoteNG.UI.Forms
         private ConnectionInfo _selectedConnection;
         private readonly IList<IMessageWriter> _messageWriters = new List<IMessageWriter>();
         private readonly ThemeManager _themeManager;
-        private readonly FileBackupPruner _backupPruner = new FileBackupPruner();
+        private readonly FileBackupPruner _backupPruner = new();
 
         internal FullscreenHandler Fullscreen { get; set; }
 
@@ -89,21 +85,6 @@ namespace mRemoteNG.UI.Forms
                 }
 
                 _usingSqlServer = value;
-                UpdateWindowTitle();
-            }
-        }
-
-        public string ConnectionsFileName
-        {
-            get => _connectionsFileName;
-            set
-            {
-                if (_connectionsFileName == value)
-                {
-                    return;
-                }
-
-                _connectionsFileName = value;
                 UpdateWindowTitle();
             }
         }
@@ -476,47 +457,6 @@ namespace mRemoteNG.UI.Forms
 
         #region Window Overrides and DockPanel Stuff
 
-        private void frmMain_ResizeBegin(object sender, EventArgs e)
-        {
-            _inSizeMove = true;
-        }
-
-        private void frmMain_Resize(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Minimized)
-            {
-                if (!Settings.Default.MinimizeToTray) return;
-                if (Runtime.NotificationAreaIcon == null)
-                {
-                    Runtime.NotificationAreaIcon = new NotificationAreaIcon();
-                }
-
-                Hide();
-            }
-            else
-            {
-                PreviousWindowState = WindowState;
-            }
-        }
-
-        private void frmMain_ResizeEnd(object sender, EventArgs e)
-        {
-            _inSizeMove = false;
-            // This handles activations from clicks that started a size/move operation
-            ActivateConnection();
-        }
-
-        private void SimulateClick(Control control)
-        {
-            var clientMousePosition = control.PointToClient(MousePosition);
-            var temp_wLow = clientMousePosition.X;
-            var temp_wHigh = clientMousePosition.Y;
-            NativeMethods.SendMessage(control.Handle, NativeMethods.WM_LBUTTONDOWN, (IntPtr)NativeMethods.MK_LBUTTON,
-                                      (IntPtr)NativeMethods.MAKELPARAM(ref temp_wLow, ref temp_wHigh));
-            clientMousePosition.X = temp_wLow;
-            clientMousePosition.Y = temp_wHigh;
-        }
-
         private void ActivateConnection()
         {
             var cw = pnlDock.ActiveDocument as ConnectionWindow;
@@ -699,8 +639,6 @@ namespace mRemoteNG.UI.Forms
 
             pnlDock.Visible = true;
         }
-
-        public void ShowHideMenu() => tsContainer.TopToolStripPanelVisible = !tsContainer.TopToolStripPanelVisible;
 
         #endregion
 

@@ -90,6 +90,10 @@ Copyright © 2004 Marc Merritt © 2008 Felix Deimel
 
 # Included Components
 
+**[CefSharp](https://github.com/cefsharp/CefSharp)**  
+Copyright © The CefSharp Authors  
+MIT License
+
 **[DockPanel Suite](https://github.com/dockpanelsuite/dockpanelsuite)**  
 Copyright © 2018 @roken and @lextm (formerly Weifen Luo)  
 MIT License

@@ -13,6 +13,7 @@ using mRemoteNG.UI.Forms;
 using MySql.Data.Types;
 using mRemoteNG.Resources.Language;
 using static System.String;
+using System.Windows;
 
 namespace mRemoteNG.Tools
 {
@@ -43,9 +44,10 @@ namespace mRemoteNG.Tools
 
         public static Optional<SecureString> PasswordDialog(string passwordName = null, bool verify = true)
         {
-            var splash = FrmSplashScreen.getInstance();
-            if (!splash.IsDisposed && splash.Visible)
-                splash.Close();
+            var splash = FrmSplashScreenNew.GetInstance();
+            //TODO: something not right there 
+            //if (PresentationSource.FromVisual(splash))
+            //    splash.Close();
 
             var passwordForm = new FrmPassword(passwordName, verify);
             return passwordForm.GetKey();
@@ -64,9 +66,11 @@ namespace mRemoteNG.Tools
 
         public static string DBDate(DateTime Dt)
 		{
-			switch (Settings.Default.SQLServerType)
+			switch (Properties.OptionsDBsPage.Default.SQLServerType)
 			{
-				case "mysql":
+                case "postgresql":
+                    return Dt.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                case "mysql":
 					return Dt.ToString("yyyy/MM/dd HH:mm:ss");
 				case "mssql":
 				default:
@@ -76,9 +80,11 @@ namespace mRemoteNG.Tools
 
 		public static Type DBTimeStampType()
 		{
-			switch (Settings.Default.SQLServerType)
+			switch (Properties.OptionsDBsPage.Default.SQLServerType)
 			{
-				case "mysql":
+                case "postgresql":
+                    return typeof(DateTime);
+                case "mysql":
 					return typeof(MySqlDateTime);
 				case "mssql":
 				default:
@@ -88,12 +94,13 @@ namespace mRemoteNG.Tools
 
 		public static object DBTimeStampNow()
 		{
-			switch (Settings.Default.SQLServerType)
+			switch (Properties.OptionsDBsPage.Default.SQLServerType)
 			{
 				case "mysql":
 					return new MySqlDateTime(DateTime.Now);
 				case "mssql":
-				default:
+                case "postgresql":
+                default:
 					return DateTime.Now;
 			}
 		}
@@ -126,8 +133,7 @@ namespace mRemoteNG.Tools
                 {
                     var bmp = new Bitmap(sender.Width, sender.Height, PixelFormat.Format32bppRgb);
                     Graphics g = Graphics.FromImage(bmp);
-                    g.CopyFromScreen(sender.PointToScreen(Point.Empty), Point.Empty, bmp.Size,
-                                     CopyPixelOperation.SourceCopy);
+                    g.CopyFromScreen(sender.PointToScreen(System.Drawing.Point.Empty), System.Drawing.Point.Empty, bmp.Size, CopyPixelOperation.SourceCopy);
                     return bmp;
                 }
             }

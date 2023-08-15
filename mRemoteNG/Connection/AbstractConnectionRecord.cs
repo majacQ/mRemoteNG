@@ -22,12 +22,14 @@ namespace mRemoteNG.Connection
         private string _panel;
 
         private string _hostname;
+        private string _ec2InstanceId = "";
+        private string _ec2Region = "";
+        private string _userViaAPI = "";
         private string _username = "";
         private string _password = "";
         private string _domain = "";
         private string _vmId = "";
         private bool _useEnhancedMode;
-        private string _startProgramWorkDir = "";
         
         private string _sshTunnelConnectionName = "";
         private ProtocolType _protocol;
@@ -43,6 +45,8 @@ namespace mRemoteNG.Connection
         private string _loadBalanceInfo;
         private HTTPBase.RenderingEngine _renderingEngine;
         private bool _useCredSsp;
+        private bool _useRestrictedAdmin;
+        private bool _useRCG;
         private bool _useVmId;
 
         private RDGatewayUsageMethod _rdGatewayUsageMethod;
@@ -80,7 +84,8 @@ namespace mRemoteNG.Connection
         private string _macAddress;
         private string _openingCommand;
         private string _userField;
-        private string _startProgram;
+        private string _RDPStartProgram;
+        private string _RDPStartProgramWorkDir;
         private bool _favorite;
 
         private ProtocolVNC.Compression _vncCompression;
@@ -163,9 +168,18 @@ namespace mRemoteNG.Connection
         }
 
         [LocalizedAttributes.LocalizedCategory(nameof(Language.Connection), 2),
+         LocalizedAttributes.LocalizedDisplayName(nameof(Language.UserViaAPI)),
+         LocalizedAttributes.LocalizedDescription(nameof(Language.PropertyDescriptionUserViaAPI)),
+         AttributeUsedInAllProtocolsExcept(ProtocolType.VNC, ProtocolType.Telnet, ProtocolType.Rlogin, ProtocolType.RAW)]
+        public virtual string UserViaAPI
+        {
+            get => GetPropertyValue("UserViaAPI", _userViaAPI);
+            set => SetField(ref _userViaAPI, value, "UserViaAPI");
+        }
+        [LocalizedAttributes.LocalizedCategory(nameof(Language.Connection), 2),
          LocalizedAttributes.LocalizedDisplayName(nameof(Language.Username)),
          LocalizedAttributes.LocalizedDescription(nameof(Language.PropertyDescriptionUsername)),
-         AttributeUsedInAllProtocolsExcept(ProtocolType.VNC, ProtocolType.Telnet, ProtocolType.Rlogin, ProtocolType.RAW)]
+         AttributeUsedInProtocol(ProtocolType.RDP, ProtocolType.SSH1, ProtocolType.SSH2)]
         public virtual string Username
         {
             get => GetPropertyValue("Username", _username);
@@ -191,6 +205,26 @@ namespace mRemoteNG.Connection
         {
             get => GetPropertyValue("Domain", _domain).Trim();
             set => SetField(ref _domain, value?.Trim(), "Domain");
+        }
+
+        [LocalizedAttributes.LocalizedCategory(nameof(Language.Connection), 2),
+        LocalizedAttributes.LocalizedDisplayName(nameof(Language.EC2InstanceId)),
+        LocalizedAttributes.LocalizedDescription(nameof(Language.PropertyDescriptionEC2InstanceId)),
+        AttributeUsedInProtocol(ProtocolType.RDP, ProtocolType.SSH2)]
+        public string EC2InstanceId
+        {
+            get => GetPropertyValue("EC2InstanceId", _ec2InstanceId).Trim();
+            set => SetField(ref _ec2InstanceId, value?.Trim(), "EC2InstanceId");
+        }
+
+        [LocalizedAttributes.LocalizedCategory(nameof(Language.Connection), 2),
+        LocalizedAttributes.LocalizedDisplayName(nameof(Language.EC2Region)),
+        LocalizedAttributes.LocalizedDescription(nameof(Language.PropertyDescriptionEC2Region)),
+        AttributeUsedInProtocol(ProtocolType.RDP, ProtocolType.SSH2)]
+        public string EC2Region
+        {
+            get => GetPropertyValue("EC2Region", _ec2Region).Trim();
+            set => SetField(ref _ec2Region, value?.Trim(), "EC2Region");
         }
 
         [LocalizedAttributes.LocalizedCategory(nameof(Language.Connection), 2),
@@ -360,6 +394,28 @@ namespace mRemoteNG.Connection
         {
             get => GetPropertyValue("UseCredSsp", _useCredSsp);
             set => SetField(ref _useCredSsp, value, "UseCredSsp");
+        }
+
+        [LocalizedAttributes.LocalizedCategory(nameof(Language.Protocol), 3),
+         LocalizedAttributes.LocalizedDisplayName(nameof(Language.UseRestrictedAdmin)),
+         LocalizedAttributes.LocalizedDescription(nameof(Language.PropertyDescriptionUseRestrictedAdmin)),
+         TypeConverter(typeof(MiscTools.YesNoTypeConverter)),
+         AttributeUsedInProtocol(ProtocolType.RDP)]
+        public bool UseRestrictedAdmin
+        {
+            get => GetPropertyValue("UseRestrictedAdmin", _useRestrictedAdmin);
+            set => SetField(ref _useRestrictedAdmin, value, "UseRestrictedAdmin");
+        }
+
+        [LocalizedAttributes.LocalizedCategory(nameof(Language.Protocol), 3),
+         LocalizedAttributes.LocalizedDisplayName(nameof(Language.UseRCG)),
+         LocalizedAttributes.LocalizedDescription(nameof(Language.PropertyDescriptionUseRCG)),
+         TypeConverter(typeof(MiscTools.YesNoTypeConverter)),
+         AttributeUsedInProtocol(ProtocolType.RDP)]
+        public bool UseRCG
+        {
+            get => GetPropertyValue("UseRCG", _useRCG);
+            set => SetField(ref _useRCG, value, "UseRCG");
         }
 
         [LocalizedAttributes.LocalizedCategory(nameof(Language.Protocol), 3),
@@ -744,23 +800,23 @@ namespace mRemoteNG.Connection
         }
 
         [LocalizedAttributes.LocalizedCategory(nameof(Language.Miscellaneous), 7),
-         LocalizedAttributes.LocalizedDisplayName(nameof(Language.StartProgram)),
-         LocalizedAttributes.LocalizedDescription(nameof(Language.PropertyDescriptionStartProgram)),
+         LocalizedAttributes.LocalizedDisplayName(nameof(Language.RDPStartProgram)),
+         LocalizedAttributes.LocalizedDescription(nameof(Language.PropertyDescriptionRDPStartProgram)),
          AttributeUsedInProtocol(ProtocolType.RDP)]
-        public virtual string StartProgram
+        public virtual string RDPStartProgram
         {
-            get => GetPropertyValue("StartProgram", _startProgram);
-            set => SetField(ref _startProgram, value, "StartProgram");
+            get => GetPropertyValue("RDPStartProgram", _RDPStartProgram);
+            set => SetField(ref _RDPStartProgram, value, "RDPStartProgram");
         }
 
         [LocalizedAttributes.LocalizedCategory(nameof(Language.Miscellaneous), 7),
          LocalizedAttributes.LocalizedDisplayName(nameof(Language.RDPStartProgramWorkDir)),
          LocalizedAttributes.LocalizedDescription(nameof(Language.PropertyDescriptionRDPStartProgramWorkDir)),
          AttributeUsedInProtocol(ProtocolType.RDP)]
-        public virtual string StartProgramWorkDir
+        public virtual string RDPStartProgramWorkDir
         {
-            get => GetPropertyValue("StartProgramWorkDir", _startProgramWorkDir);
-            set => SetField(ref _startProgramWorkDir, value, "StartProgramWorkDir");
+            get => GetPropertyValue("RDPStartProgramWorkDir", _RDPStartProgramWorkDir);
+            set => SetField(ref _RDPStartProgramWorkDir, value, "RDPStartProgramWorkDir");
         }
 
         #endregion

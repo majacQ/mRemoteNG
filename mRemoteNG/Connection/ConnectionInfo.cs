@@ -17,6 +17,7 @@ using mRemoteNG.Container;
 using mRemoteNG.Properties;
 using mRemoteNG.Tree;
 using mRemoteNG.Resources.Language;
+using mRemoteNG.Tree.Root;
 
 
 namespace mRemoteNG.Connection
@@ -46,10 +47,10 @@ namespace mRemoteNG.Connection
         [Browsable(false)] public ContainerInfo Parent { get; internal set; }
 
         [Browsable(false)]
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public bool IsQuickConnect { get; set; }
 
-        [Browsable(false)] public bool PleaseConnect { get; set; }
+        [Browsable(false)]
+        public bool PleaseConnect { get; set; }
 
         #endregion
 
@@ -200,7 +201,10 @@ namespace mRemoteNG.Connection
 
         private bool ShouldThisPropertyBeInherited(string propertyName)
         {
-            return ParentIsValidInheritanceTarget() && IsInheritanceTurnedOnForThisProperty(propertyName);
+            return
+                Inheritance.InheritanceActive &&
+                ParentIsValidInheritanceTarget() &&
+                IsInheritanceTurnedOnForThisProperty(propertyName);
         }
 
         private bool ParentIsValidInheritanceTarget()
@@ -292,6 +296,7 @@ namespace mRemoteNG.Connection
         private void SetConnectionDefaults()
         {
             Hostname = string.Empty;
+            EC2Region = Settings.Default.ConDefaultEC2Region;
         }
 
         private void SetProtocolDefaults()
@@ -307,14 +312,16 @@ namespace mRemoteNG.Connection
             LoadBalanceInfo = Settings.Default.ConDefaultLoadBalanceInfo;
             RenderingEngine = (HTTPBase.RenderingEngine)Enum.Parse(typeof(HTTPBase.RenderingEngine), Settings.Default.ConDefaultRenderingEngine);
             UseCredSsp = Settings.Default.ConDefaultUseCredSsp;
+            UseRestrictedAdmin = Settings.Default.ConDefaultUseRestrictedAdmin;
+            UseRCG = Settings.Default.ConDefaultUseRCG;
             UseVmId = Settings.Default.ConDefaultUseVmId;
             UseEnhancedMode = Settings.Default.ConDefaultUseEnhancedMode;
         }
 
         private void SetRemoteDesktopServicesDefaults()
         {
-            StartProgram = string.Empty;
-            StartProgramWorkDir = string.Empty;
+            RDPStartProgram = string.Empty;
+            RDPStartProgramWorkDir = string.Empty;
         }
 
         private void SetRdGatewayDefaults()
@@ -363,7 +370,8 @@ namespace mRemoteNG.Connection
             MacAddress = Settings.Default.ConDefaultMacAddress;
             UserField = Settings.Default.ConDefaultUserField;
             Favorite = Settings.Default.ConDefaultFavorite;
-            StartProgram = Settings.Default.ConDefaultStartProgram;
+            RDPStartProgram = Settings.Default.ConDefaultRDPStartProgram;
+            RDPStartProgramWorkDir = Settings.Default.ConDefaultRDPStartProgramWorkDir;
             OpeningCommand = Settings.Default.OpeningCommand;
         }
 

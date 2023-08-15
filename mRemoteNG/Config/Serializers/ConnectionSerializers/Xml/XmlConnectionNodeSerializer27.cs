@@ -115,8 +115,8 @@ namespace mRemoteNG.Config.Serializers.ConnectionSerializers.Xml
             element.Add(new XAttribute("UserField", connectionInfo.UserField));
             element.Add(new XAttribute("Favorite", connectionInfo.Favorite));
             element.Add(new XAttribute("ExtApp", connectionInfo.ExtApp));
-            element.Add(new XAttribute("StartProgram", connectionInfo.StartProgram));
-            element.Add(new XAttribute("StartProgramWorkDir", connectionInfo.StartProgramWorkDir));
+            element.Add(new XAttribute("StartProgram", connectionInfo.RDPStartProgram));
+            element.Add(new XAttribute("StartProgramWorkDir", connectionInfo.RDPStartProgramWorkDir));
             element.Add(new XAttribute("VNCCompression", connectionInfo.VNCCompression));
             element.Add(new XAttribute("VNCEncoding", connectionInfo.VNCEncoding));
             element.Add(new XAttribute("VNCAuthMode", connectionInfo.VNCAuthMode));
@@ -150,6 +150,13 @@ namespace mRemoteNG.Config.Serializers.ConnectionSerializers.Xml
             element.Add(_saveFilter.SaveDomain
                 ? new XAttribute("RDGatewayDomain", connectionInfo.RDGatewayDomain)
                 : new XAttribute("RDGatewayDomain", ""));
+
+            element.Add(new XAttribute("UseRCG", connectionInfo.UseRCG));
+            element.Add(new XAttribute("UseRestrictedAdmin", connectionInfo.UseRestrictedAdmin));
+
+            element.Add(new XAttribute("UserViaAPI", connectionInfo.UserViaAPI));
+            element.Add(new XAttribute("EC2InstanceId", connectionInfo.EC2InstanceId));
+            element.Add(new XAttribute("EC2Region", connectionInfo.EC2Region));
         }
 
         private void SetInheritanceAttributes(XContainer element, IInheritable connectionInfo)
@@ -292,6 +299,12 @@ namespace mRemoteNG.Config.Serializers.ConnectionSerializers.Xml
                     element.Add(new XAttribute("InheritUseVmId", inheritance.UseVmId.ToString().ToLowerInvariant()));
                 if (inheritance.UseEnhancedMode)
                     element.Add(new XAttribute("InheritUseEnhancedMode", inheritance.UseEnhancedMode.ToString().ToLowerInvariant()));
+                if (inheritance.UserViaAPI)
+                    element.Add(new XAttribute("InheritUserViaAPI", inheritance.UserViaAPI.ToString().ToLowerInvariant()));
+                if (inheritance.UseRCG)
+                    element.Add(new XAttribute("InheritUseRCG", inheritance.UseRCG.ToString().ToLowerInvariant()));
+                if (inheritance.UseRestrictedAdmin)
+                    element.Add(new XAttribute("InheritUseRestrictedAdmin", inheritance.UseRestrictedAdmin.ToString().ToLowerInvariant()));
             }
         }
     }

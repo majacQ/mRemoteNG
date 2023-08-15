@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -86,26 +86,7 @@ namespace mRemoteNGTests.UI.Window.ConfigWindowTests
 		        () => "The property mode should switch from inheritance to connection properties when clicking on the root node.");
         }
 
-		[Test]
-        public void SwitchFromInheritanceToConnectionPropertiesWhenClickingChildOfRootNode()
-        {
-	        // connection with a normal parent container
-			var root = new RootNodeInfo(RootNodeType.Connection);
-			var containerWhoseParentIsRoot = new ContainerInfo();
-	        var connection = new ConnectionInfo();
-	        root.AddChild(containerWhoseParentIsRoot);
-			containerWhoseParentIsRoot.AddChild(connection);
-
-	        _configWindow.SelectedTreeNode = connection;
-	        _configWindow.ShowInheritanceProperties();
-
-	        _configWindow.SelectedTreeNode = containerWhoseParentIsRoot;
-	        Assert.That(_configWindow.PropertiesVisible, Is.True,
-		        () => "The property mode should switch from inheritance to connection properties " +
-		              "when clicking on a container whose parent is the root node.");
-        }
-
-		[TestCaseSource(nameof(EveryNodeType))]
+        [TestCaseSource(nameof(EveryNodeType))]
         public void DefaultConnectionPropertiesCanBeShownRegardlessOfWhichNodeIsSelected(ConnectionInfo selectedObject)
         {
 	        _configWindow.SelectedTreeNode = selectedObject;
@@ -134,9 +115,9 @@ namespace mRemoteNGTests.UI.Window.ConfigWindowTests
 			_configWindow.SelectedTreeNode = selectedObject;
 
 			var shouldBeAvailable = selectedObject != null &&
-									!(selectedObject is RootNodeInfo) &&
-									!(selectedObject is PuttySessionInfo) &&
-									!(selectedObject.Parent is RootNodeInfo);
+									selectedObject is not RootNodeInfo &&
+									selectedObject is not PuttySessionInfo &&
+									selectedObject.Parent is not RootNodeInfo;
 
 			Assert.That(_configWindow.CanShowInheritance, Is.EqualTo(shouldBeAvailable));
 		}
@@ -167,50 +148,31 @@ namespace mRemoteNGTests.UI.Window.ConfigWindowTests
 		private static IEnumerable<TestCaseData> EveryNodeType()
 		{
 			var protocolTypes = typeof(ProtocolType).GetEnumValues().OfType<ProtocolType>().ToList();
-			var root = new RootNodeInfo(RootNodeType.Connection);
 			var container = new ContainerInfo();
-			var connectionsWithNormalParent = protocolTypes
+			var connections = protocolTypes
 				.Select(protocolType =>
 				{
 					var c = new ConnectionInfo {Protocol = protocolType};
 					c.SetParent(container);
-					return new TestCaseData(c).SetName(protocolType + ", Connection, NormalParent");
+					return new TestCaseData(c).SetName(protocolType + ", Connection");
 				});
 
-			var connectionsWithRootParent = protocolTypes
-				.Select(protocolType =>
-				{
-					var c = new ConnectionInfo { Protocol = protocolType };
-					c.SetParent(root);
-					return new TestCaseData(c).SetName(protocolType + ", Connection, RootParent");
-				});
-
-			var contianersWithNormalParent = protocolTypes
+			var containers = protocolTypes
 				.Select(protocolType =>
 				{
 					var c = new ContainerInfo { Protocol = protocolType };
 					c.SetParent(container);
-					return new TestCaseData(c).SetName(protocolType + ", Connection, NormalParent");
+					return new TestCaseData(c).SetName(protocolType + ", Connection");
 				});
 
-			var containersWithRootParent = protocolTypes
-				.Select(protocolType =>
-				{
-					var c = new ContainerInfo { Protocol = protocolType };
-					c.SetParent(root);
-					return new TestCaseData(c).SetName(protocolType + ", Connection, RootParent");
-				});
-
-			return connectionsWithNormalParent
-				.Concat(connectionsWithRootParent)
-				.Concat(contianersWithNormalParent)
-				.Concat(containersWithRootParent)
+			return connections
+				.Concat(containers)
 				.Concat(new[]
 				{
-					new TestCaseData(root).SetName("RootNode"),
-					new TestCaseData(new RootPuttySessionsNodeInfo()).SetName("RootPuttyNode"), 
-					new TestCaseData(new PuttySessionInfo()).SetName("PuttyNode"), 
-					new TestCaseData(null).SetName("Null"), 
+					new TestCaseData(new RootNodeInfo(RootNodeType.Connection)).SetName("RootNode"),
+					new TestCaseData(new RootPuttySessionsNodeInfo()).SetName("RootPuttyNode"),
+					new TestCaseData(new PuttySessionInfo()).SetName("PuttyNode"),
+					new TestCaseData(null).SetName("Null")
 				});
 		}
 
@@ -219,7 +181,7 @@ namespace mRemoteNGTests.UI.Window.ConfigWindowTests
             // build connection info. set certain connection properties so
             // that toggled properties are hidden in the property grid. We
             // will test those separately in the special protocol tests.
-            var node = isContainer 
+            var node = isContainer
                 ? new ContainerInfo()
                 : new ConnectionInfo();
 
@@ -250,8 +212,7 @@ namespace mRemoteNGTests.UI.Window.ConfigWindowTests
                 nameof(ConnectionInfo.MacAddress),
                 nameof(ConnectionInfo.UserField),
                 nameof(ConnectionInfo.Favorite),
-                nameof(ConnectionInfo.SSHTunnelConnectionName),
-                nameof(ConnectionInfo.OpeningCommand),
+                nameof(ConnectionInfo.SSHTunnelConnectionName)
             };
 
             if (!isContainer)
@@ -277,6 +238,8 @@ namespace mRemoteNGTests.UI.Window.ConfigWindowTests
                         nameof(ConnectionInfo.RDPMinutesToIdleTimeout),
                         nameof(ConnectionInfo.LoadBalanceInfo),
                         nameof(ConnectionInfo.UseCredSsp),
+                        nameof(ConnectionInfo.UseRestrictedAdmin),
+                        nameof(ConnectionInfo.UseRCG),
                         nameof(ConnectionInfo.RDGatewayUsageMethod),
                         nameof(ConnectionInfo.Resolution),
                         nameof(ConnectionInfo.Colors),
@@ -297,9 +260,12 @@ namespace mRemoteNGTests.UI.Window.ConfigWindowTests
                         nameof(ConnectionInfo.RedirectSmartCards),
                         nameof(ConnectionInfo.RedirectSound),
                         nameof(ConnectionInfo.RedirectAudioCapture),
-						nameof(ConnectionInfo.RdpVersion),
-                        nameof(ConnectionInfo.OpeningCommand),
-                        nameof(ConnectionInfo.StartProgram)
+			nameof(ConnectionInfo.RdpVersion),
+                        nameof(ConnectionInfo.RDPStartProgram),
+                        nameof(ConnectionInfo.RDPStartProgramWorkDir),
+			nameof(ConnectionInfo.UserViaAPI),
+                        nameof(ConnectionInfo.EC2InstanceId),
+                        nameof(ConnectionInfo.EC2Region)
                     });
                     break;
                 case ProtocolType.VNC:
@@ -308,10 +274,21 @@ namespace mRemoteNGTests.UI.Window.ConfigWindowTests
                         nameof(ConnectionInfo.Password),
                         nameof(ConnectionInfo.Port),
                         nameof(ConnectionInfo.VNCSmartSizeMode),
-                        nameof(ConnectionInfo.VNCViewOnly),
+                        nameof(ConnectionInfo.VNCViewOnly)
                     });
                     break;
                 case ProtocolType.SSH1:
+                    expectedProperties.AddRange(new[]
+                    {
+                        nameof(ConnectionInfo.Username),
+                        nameof(ConnectionInfo.Password),
+                        nameof(ConnectionInfo.Port),
+                        nameof(ConnectionInfo.SSHOptions),
+                        nameof(ConnectionInfo.PuttySession),
+                        nameof(ConnectionInfo.OpeningCommand),
+                        nameof(ConnectionInfo.UserViaAPI),
+                    });
+                    break;
                 case ProtocolType.SSH2:
                     expectedProperties.AddRange(new []
                     {
@@ -319,7 +296,11 @@ namespace mRemoteNGTests.UI.Window.ConfigWindowTests
                         nameof(ConnectionInfo.Password),
                         nameof(ConnectionInfo.Port),
                         nameof(ConnectionInfo.SSHOptions),
-                        nameof(ConnectionInfo.PuttySession)
+                        nameof(ConnectionInfo.PuttySession),
+                        nameof(ConnectionInfo.OpeningCommand),
+                        nameof(ConnectionInfo.EC2InstanceId),
+                        nameof(ConnectionInfo.EC2Region),
+                        nameof(ConnectionInfo.UserViaAPI),
                     });
                     break;
                 case ProtocolType.Telnet:
@@ -335,7 +316,7 @@ namespace mRemoteNGTests.UI.Window.ConfigWindowTests
                 case ProtocolType.HTTPS:
                     expectedProperties.AddRange(new []
                     {
-                        nameof(ConnectionInfo.Username),
+                        nameof(ConnectionInfo.UserViaAPI),
                         nameof(ConnectionInfo.Password),
                         nameof(ConnectionInfo.Port),
                         nameof(ConnectionInfo.RenderingEngine),
@@ -344,7 +325,7 @@ namespace mRemoteNGTests.UI.Window.ConfigWindowTests
                 case ProtocolType.PowerShell:
                     expectedProperties.AddRange(new[]
                     {
-                        nameof(ConnectionInfo.Username),
+                        nameof(ConnectionInfo.UserViaAPI),
                         nameof(ConnectionInfo.Password),
                         nameof(ConnectionInfo.Domain),
                         nameof(ConnectionInfo.Port),
@@ -353,7 +334,7 @@ namespace mRemoteNGTests.UI.Window.ConfigWindowTests
                 case ProtocolType.IntApp:
                     expectedProperties.AddRange(new[]
                     {
-                        nameof(ConnectionInfo.Username),
+                        nameof(ConnectionInfo.UserViaAPI),
                         nameof(ConnectionInfo.Password),
                         nameof(ConnectionInfo.Domain),
                         nameof(ConnectionInfo.Port),

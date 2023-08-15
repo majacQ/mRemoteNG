@@ -1,4 +1,6 @@
-﻿namespace mRemoteNG.UI.Forms
+﻿using System.Windows.Forms;
+
+namespace mRemoteNG.UI.Forms
 {
 	public partial class FrmMain : System.Windows.Forms.Form
 	{
@@ -32,7 +34,6 @@
         private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            mRemoteNG.Connection.ConnectionInitiator connectionInitiator1 = new mRemoteNG.Connection.ConnectionInitiator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.pnlDock = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.msMain = new System.Windows.Forms.MenuStrip();
@@ -47,6 +48,8 @@
             this._externalToolsToolStrip = new mRemoteNG.UI.Controls.ExternalToolsToolStrip();
             this.tmrAutoSave = new System.Windows.Forms.Timer(this.components);
             this.vsToolStripExtender = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
+            this.tsModeAdmin = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsModeUser = new System.Windows.Forms.ToolStripMenuItem();
             this.msMain.SuspendLayout();
             this.tsContainer.ContentPanel.SuspendLayout();
             this.tsContainer.TopToolStripPanel.SuspendLayout();
@@ -60,7 +63,7 @@
             this.pnlDock.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingSdi;
             this.pnlDock.Location = new System.Drawing.Point(0, 0);
             this.pnlDock.Name = "pnlDock";
-            this.pnlDock.Size = new System.Drawing.Size(1129, 496);
+            this.pnlDock.Size = new System.Drawing.Size(1129, 546);
             this.pnlDock.TabIndex = 13;
             this.pnlDock.ActiveDocumentChanged += new System.EventHandler(this.pnlDock_ActiveDocumentChanged);
             // 
@@ -75,17 +78,16 @@
             this.viewMenu,
             this.toolsMenu,
             this.helpMenu});
-            this.msMain.Location = new System.Drawing.Point(3, 50);
+            this.msMain.Location = new System.Drawing.Point(3, 0);
             this.msMain.Name = "msMain";
             this.msMain.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
-            this.msMain.Size = new System.Drawing.Size(303, 25);
+            this.msMain.Size = new System.Drawing.Size(151, 25);
             this.msMain.Stretch = false;
             this.msMain.TabIndex = 0;
             this.msMain.Text = "Main Toolbar";
             // 
             // fileMenu
             // 
-            this.fileMenu.ConnectionInitiator = null;
             this.fileMenu.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.fileMenu.Name = "mMenFile";
             this.fileMenu.Size = new System.Drawing.Size(37, 19);
@@ -133,7 +135,7 @@
             // tsContainer.ContentPanel
             // 
             this.tsContainer.ContentPanel.Controls.Add(this.pnlDock);
-            this.tsContainer.ContentPanel.Size = new System.Drawing.Size(1129, 496);
+            this.tsContainer.ContentPanel.Size = new System.Drawing.Size(1129, 546);
             this.tsContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tsContainer.Location = new System.Drawing.Point(0, 0);
             this.tsContainer.Name = "tsContainer";
@@ -152,7 +154,6 @@
             // _quickConnectToolStrip
             // 
             this._quickConnectToolStrip.BackColor = System.Drawing.SystemColors.Control;
-            this._quickConnectToolStrip.ConnectionInitiator = connectionInitiator1;
             this._quickConnectToolStrip.Dock = System.Windows.Forms.DockStyle.None;
             this._quickConnectToolStrip.ForeColor = System.Drawing.SystemColors.ControlText;
             this._quickConnectToolStrip.Location = new System.Drawing.Point(114, 25);
@@ -188,19 +189,33 @@
             // 
             this.vsToolStripExtender.DefaultRenderer = null;
             // 
+            // tsModeAdmin
+            // 
+            this.tsModeAdmin.Name = "tsModeAdmin";
+            this.tsModeAdmin.Size = new System.Drawing.Size(32, 19);
+            // 
+            // tsModeUser
+            // 
+            this.tsModeUser.Checked = true;
+            this.tsModeUser.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.tsModeUser.Name = "tsModeUser";
+            this.tsModeUser.Size = new System.Drawing.Size(180, 22);
+            this.tsModeUser.Text = "UserMode";
+            this.tsModeUser.Click += new System.EventHandler(this.tsModeUser_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1129, 571);
             this.Controls.Add(this.tsContainer);
-            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.msMain;
             this.MinimumSize = new System.Drawing.Size(400, 400);
             this.Name = "FrmMain";
             this.Opacity = 0D;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = " ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
@@ -216,9 +231,22 @@
             this.tsContainer.ResumeLayout(false);
             this.tsContainer.PerformLayout();
             this.ResumeLayout(false);
-
 		}
-		internal WeifenLuo.WinFormsUI.Docking.DockPanel pnlDock;
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Alt | Keys.Menu))
+            {
+                if(!msMain.Visible)
+                {
+                    msMain.Visible = true;
+                }
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        internal WeifenLuo.WinFormsUI.Docking.DockPanel pnlDock;
 		internal System.Windows.Forms.MenuStrip msMain;
 		internal System.Windows.Forms.ToolStripContainer tsContainer;
 		internal System.Windows.Forms.Timer tmrAutoSave;
@@ -233,5 +261,7 @@
 		internal mRemoteNG.UI.Controls.MultiSshToolStrip _multiSshToolStrip;
         //theming support
         private WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender vsToolStripExtender;
+        private System.Windows.Forms.ToolStripMenuItem tsModeAdmin;
+        private System.Windows.Forms.ToolStripMenuItem tsModeUser;
     }
 }

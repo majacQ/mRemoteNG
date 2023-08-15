@@ -97,6 +97,8 @@ namespace mRemoteNG.Config.Serializers.ConnectionSerializers.MsSql
             connectionInfo.Port = (int)dataRow["Port"];
             connectionInfo.UseConsoleSession = (bool)dataRow["ConnectToConsole"];
             connectionInfo.UseCredSsp = (bool)dataRow["UseCredSsp"];
+            connectionInfo.UseRestrictedAdmin = (bool)dataRow["UseRestrictedAdmin"];
+            connectionInfo.UseRCG = (bool)dataRow["UseRCG"];
             connectionInfo.UseVmId = (bool)dataRow["UseVmId"];
             connectionInfo.RenderingEngine = (HTTPBase.RenderingEngine)Enum.Parse(typeof(HTTPBase.RenderingEngine), (string)dataRow["RenderingEngine"]);
             connectionInfo.RDPAuthenticationLevel = (AuthenticationLevel)Enum.Parse(typeof(AuthenticationLevel), (string)dataRow["RDPAuthenticationLevel"]);
@@ -123,8 +125,8 @@ namespace mRemoteNG.Config.Serializers.ConnectionSerializers.MsSql
             connectionInfo.RedirectSound = (RDPSounds)Enum.Parse(typeof(RDPSounds), (string)dataRow["RedirectSound"]);
             connectionInfo.SoundQuality = (RDPSoundQuality)Enum.Parse(typeof(RDPSoundQuality), (string)dataRow["SoundQuality"]);
             connectionInfo.RedirectAudioCapture = (bool)dataRow["RedirectAudioCapture"];
-            connectionInfo.StartProgram = (string)dataRow["StartProgram"];
-            connectionInfo.StartProgramWorkDir = (string)dataRow["StartProgramWorkDir"];
+            connectionInfo.RDPStartProgram = (string)dataRow["StartProgram"];
+            connectionInfo.RDPStartProgramWorkDir = (string)dataRow["StartProgramWorkDir"];
             connectionInfo.RedirectKeys = (bool)dataRow["RedirectKeys"];
             connectionInfo.OpeningCommand = (string)dataRow["OpeningCommand"];
             connectionInfo.PreExtApp = (string)dataRow["PreExtApp"];
@@ -188,6 +190,8 @@ namespace mRemoteNG.Config.Serializers.ConnectionSerializers.MsSql
             connectionInfo.Inheritance.AutomaticResize = (bool)dataRow["InheritAutomaticResize"];
             connectionInfo.Inheritance.UseConsoleSession = (bool)dataRow["InheritUseConsoleSession"];
             connectionInfo.Inheritance.UseCredSsp = (bool)dataRow["InheritUseCredSsp"];
+            connectionInfo.Inheritance.UseRestrictedAdmin = (bool)dataRow["InheritUseRestrictedAdmin"];
+            connectionInfo.Inheritance.UseRCG = (bool)dataRow["InheritUseRCG"];
             connectionInfo.Inheritance.UseVmId = (bool)dataRow["InheritUseVmId"];
             connectionInfo.Inheritance.UseEnhancedMode = (bool)dataRow["InheritUseEnhancedMode"];
             connectionInfo.Inheritance.VmId = (bool)dataRow["InheritVmId"];

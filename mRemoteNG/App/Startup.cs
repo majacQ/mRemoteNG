@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Threading.Tasks;
 using mRemoteNG.App.Info;
 using mRemoteNG.App.Initialization;
 using mRemoteNG.App.Update;
@@ -37,8 +38,7 @@ namespace mRemoteNG.App
 
         public void InitializeProgram(MessageCollector messageCollector)
         {
-            Debug.Print("---------------------------" + Environment.NewLine + "[START] - " +
-                        Convert.ToString(DateTime.Now, CultureInfo.InvariantCulture));
+            Debug.Print("---------------------------" + Environment.NewLine + "[START] - " + Convert.ToString(DateTime.Now, CultureInfo.InvariantCulture));
             var startupLogger = new StartupDataLogger(messageCollector);
             startupLogger.LogStartupData();
             CompatibilityChecker.CheckCompatibility(messageCollector);
@@ -58,14 +58,13 @@ namespace mRemoteNG.App
         public void CreateConnectionsProvider(MessageCollector messageCollector)
         {
             messageCollector.AddMessage(MessageClass.DebugMsg, "Determining if we need a database syncronizer");
-            if (!Settings.Default.UseSQLServer) return;
+            if (!Properties.OptionsDBsPage.Default.UseSQLServer) return;
             messageCollector.AddMessage(MessageClass.DebugMsg, "Creating database syncronizer");
-            Runtime.ConnectionsService.RemoteConnectionsSyncronizer =
-                new RemoteConnectionsSyncronizer(new SqlConnectionsUpdateChecker());
+            Runtime.ConnectionsService.RemoteConnectionsSyncronizer = new RemoteConnectionsSyncronizer(new SqlConnectionsUpdateChecker());
             Runtime.ConnectionsService.RemoteConnectionsSyncronizer.Enable();
         }
 
-        public void CheckForUpdate()
+        public async Task CheckForUpdate()
         {
             if (_appUpdate == null)
             {
@@ -77,42 +76,15 @@ namespace mRemoteNG.App
             }
 
             var nextUpdateCheck =
-                Convert.ToDateTime(Settings.Default.CheckForUpdatesLastCheck.Add(
-                                                                                 TimeSpan
-                                                                                     .FromDays(Convert.ToDouble(Settings
-                                                                                                                .Default
-                                                                                                                .CheckForUpdatesFrequencyDays))));
-            if (!Settings.Default.UpdatePending && DateTime.UtcNow < nextUpdateCheck)
+                Convert.ToDateTime(Properties.OptionsUpdatesPage.Default.CheckForUpdatesLastCheck.Add(TimeSpan.FromDays(Convert.ToDouble(Properties.OptionsUpdatesPage.Default.CheckForUpdatesFrequencyDays))));
+            if (!Properties.OptionsUpdatesPage.Default.UpdatePending && DateTime.UtcNow < nextUpdateCheck)
             {
-                return;
-            }
-
-            _appUpdate.GetUpdateInfoCompletedEvent += GetUpdateInfoCompleted;
-            _appUpdate.GetUpdateInfoAsync();
-        }
-
-        private void GetUpdateInfoCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            if (_frmMain.InvokeRequired)
-            {
-                _frmMain.Invoke(new AsyncCompletedEventHandler(GetUpdateInfoCompleted), sender, e);
                 return;
             }
 
             try
             {
-                _appUpdate.GetUpdateInfoCompletedEvent -= GetUpdateInfoCompleted;
-
-                if (e.Cancelled)
-                {
-                    return;
-                }
-
-                if (e.Error != null)
-                {
-                    throw e.Error;
-                }
-
+                await _appUpdate.GetUpdateInfoAsync();
                 if (_appUpdate.IsUpdateAvailable())
                 {
                     Windows.Show(WindowType.Update);
@@ -120,7 +92,7 @@ namespace mRemoteNG.App
             }
             catch (Exception ex)
             {
-                Runtime.MessageCollector.AddExceptionMessage("GetUpdateInfoCompleted() failed.", ex);
+                Runtime.MessageCollector.AddExceptionMessage("CheckForUpdate() failed.", ex);
             }
         }
     }

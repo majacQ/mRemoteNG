@@ -3,21 +3,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.77.3]
 ### Added
-- #327: Added Alternative Shell for RDP settings
+- #2138: Improve compatibility with Remote Desktop Connection Manager v2.83
+- #2123: Thycotic Secret Server - Added 2FA OTP support
+### Changed
+- #1546: Enable resize without reconnect for RDP Version Rdc9 or higher
+ 
+## [1.77.2]
+### Added
+- #2086: Replace WebClient with async HttpClient for updater.
+- #1850: Minify config xml
+- #1770: Added missing RDP performance settings
+- #1516: added API to access credential vault (Thycotic Secret Server) by specifying SSAPI:ID as username
 - #1476: Configurable backups. Can now edit/set backup frequency, backup path, and max number of backup files.
 - #1427: Fix RDP local desktop scale not taking effect on remote
-- #1770: Added missing RDP performance settings
 - #1332: Added option to hide menu strip container
+- #870: Added option to push inheritance settings to child nodes recursively
 - #545: Option to minimize to system tray on closing
+- #503: SSH Execute a single command after login
 - #420: SSH tunneling implemented
+- #327: Added Alternative Shell for RDP settings
 - #319: Override quick connect username when using user@domain
 - #283: Support for native PowerShell remoting as new protocol
-- #1850: Minify config xml
-- #1516: added API to access credential vault (Thycotic Secret Server) by specifying SSAPI:ID as username
-- #503: SSH Execute a single command after login
+- #xxx: Add external connector to retrieve ip address from Amazon EC2 Instance IDs
 ### Changed
+- #2102: Extended the field RenderingEngine from 10 chars to 16
 - #2022: Replaced CefSharp with WebView2
 - #2014: Revised icons
 - #2013: Removed components check
@@ -28,18 +39,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - #1767: Turned about window into a simple popup form
 - #1690: Replaced GeckoFX (Firefox) with CefSharp (Chromium)
 - #1325: Language resource files cleanup
+- #xxxx: Secret Server connector via new field "API User ID" instead of SSAPI: prefix
 ### Fixed
+- #2125: Fixed string parsing logic for Quick Connect toolbar.
+- #2122: Fix to avoid throwing exception incase if not able decrypt connections and ask to open another one or create a new. 
+- #2117: Fix of broken Links due migration to .NET 6 and branch renaming
+- #2098: Fix failed BinaryFileTest
+- #2097: Fix failed tests related to mRemoteNGTests.UI.Window.ConfigWindowTests
+- #2096: Corrected encryption code of LegacyRijndaelCryptographyProvider
+- #2089: Fixed the exception thrown by menu buttons "Documentation" and "Website"
+- #2087: Fixed application crash, when the update file is launched from the application
+- #2079: Fixed theme files not being copied to output directory
+- #2012: Updated PuTTYNG to v0.76
 - #1884: Allow setting Port when using MSSQL
 - #1783: Added missing inheritance properties to SQL scripts
-- #1773: Connection issue with mysql - Missing fields in 
+- #1773: Connection issue with MySql - Missing fields in
 - #1756: Cannot type any character on MultiSSH toolbar 
 - #1720: Show configuration file name in title of password prompt form
 - #1713: Sound redirection does not work if Clipboard redirection is set to No
 - #1632: 1.77.1 breaks RDP drive and sound redirection
-- #1610: Menu bar changes to english when cancelling options form
+- #1610: Menu bar changes to English when canceling options form
 - #1595: Unhandled exception when trying to browse through non existent multi ssh history with keyboard key strokes
 - #1589: Update SQL tables instead of rewriting them
 - #1465: REGRESSION: Smart Cards redirection to Remote Desktop not working
+- #1363: Don't show "Disk Usage" button in installer
 - #1337: Unhandled exception after closing mRemoteNG
 - #359: Making a VNC connection to an unreachable host causes the application to not respond for 20-30 seconds
 - #618: Do not break the Windows Clipboard Chain when exiting.

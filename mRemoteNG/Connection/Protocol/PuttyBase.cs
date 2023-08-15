@@ -79,52 +79,58 @@ namespace mRemoteNG.Connection.Protocol
 
                     if (PuttyProtocol == Putty_Protocol.ssh)
                     {
-                        var username = "";
-                        var password = "";
 
-                        if (!string.IsNullOrEmpty(InterfaceControl.Info?.Username))
-                        {
-                            username = InterfaceControl.Info.Username;
-                        }
-                        else
-                        {
-                            // ReSharper disable once SwitchStatementMissingSomeCases
-                            switch (Settings.Default.EmptyCredentials)
-                            {
-                                case "windows":
-                                    username = Environment.UserName;
-                                    break;
-                                case "custom":
-                                    username = Settings.Default.DefaultUsername;
-                                    break;
-                            }
-                        }
+                        var username = InterfaceControl.Info?.Username ?? "";
+                        var password = InterfaceControl.Info?.Password ?? "";
+                        var domain = InterfaceControl.Info?.Domain ?? "";
+                        var UserViaAPI = InterfaceControl.Info?.UserViaAPI ?? "";
 
-                        if (!string.IsNullOrEmpty(InterfaceControl.Info?.Password))
-                        {
-                            password = InterfaceControl.Info.Password;
-                        }
-                        else
-                        {
-                            if (Settings.Default.EmptyCredentials == "custom")
-                            {
-                                var cryptographyProvider = new LegacyRijndaelCryptographyProvider();
-                                password = cryptographyProvider.Decrypt(Settings.Default.DefaultPassword,
-                                                                        Runtime.EncryptionKey);
-                            }
-                        }
 
                         // access secret server api if necessary
-                        if (username.StartsWith("SSAPI:"))
-                        {
-                            var domain = ""; // dummy
+                        if (!string.IsNullOrEmpty(UserViaAPI)) {
+
                             try
                             {
-                                ExternalConnectors.TSS.SecretServerInterface.FetchSecretFromServer(username, out username, out password, out domain);
+                                ExternalConnectors.TSS.SecretServerInterface.FetchSecretFromServer("SSAPI:" + InterfaceControl.Info?.UserViaAPI, out username, out password, out domain);
                             }
                             catch (Exception ex)
                             {
                                 Event_ErrorOccured(this, "Secret Server Interface Error: " + ex.Message, 0);
+                            }
+                        }
+
+                        if (string.IsNullOrEmpty(username))
+                        {
+                            switch (Properties.OptionsCredentialsPage.Default.EmptyCredentials)
+                            {
+                                case "windows":
+                                    username = Environment.UserName;
+                                    break;
+                                case "custom" when !string.IsNullOrEmpty(Properties.OptionsCredentialsPage.Default.DefaultUsername):
+                                    username = Properties.OptionsCredentialsPage.Default.DefaultUsername;
+                                    break;
+                                case "custom":
+                                    try
+                                    {
+                                        ExternalConnectors.TSS.SecretServerInterface.FetchSecretFromServer(
+                                            "SSAPI:" + Properties.OptionsCredentialsPage.Default.UserViaAPDefault, out username, out password,
+                                            out domain);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Event_ErrorOccured(this, "Secret Server Interface Error: " + ex.Message, 0);
+                                    }
+                                    break;
+                            }
+                        }
+                       
+
+                        if (string.IsNullOrEmpty(password))
+                        {
+                            if (Properties.OptionsCredentialsPage.Default.EmptyCredentials == "custom")
+                            {
+                                var cryptographyProvider = new LegacyRijndaelCryptographyProvider();
+                                password = cryptographyProvider.Decrypt(Properties.OptionsCredentialsPage.Default.DefaultPassword, Runtime.EncryptionKey);
                             }
                         }
 
@@ -164,16 +170,15 @@ namespace mRemoteNG.Connection.Protocol
                 PuttyProcess.Exited += ProcessExited;
 
                 PuttyProcess.Start();
-                PuttyProcess.WaitForInputIdle(Settings.Default.MaxPuttyWaitTime * 1000);
+                PuttyProcess.WaitForInputIdle(Properties.OptionsAdvancedPage.Default.MaxPuttyWaitTime * 1000);
 
                 var startTicks = Environment.TickCount;
                 while (PuttyHandle.ToInt32() == 0 &
-                       Environment.TickCount < startTicks + Settings.Default.MaxPuttyWaitTime * 1000)
+                       Environment.TickCount < startTicks + Properties.OptionsAdvancedPage.Default.MaxPuttyWaitTime * 1000)
                 {
                     if (_isPuttyNg)
                     {
-                        PuttyHandle = NativeMethods.FindWindowEx(
-                                                                 InterfaceControl.Handle, new IntPtr(0), null, null);
+                        PuttyHandle = NativeMethods.FindWindowEx(InterfaceControl.Handle, new IntPtr(0), null, null);
                     }
                     else
                     {
@@ -193,14 +198,9 @@ namespace mRemoteNG.Connection.Protocol
                 }
 
                 Runtime.MessageCollector.AddMessage(MessageClass.InformationMsg, Language.PuttyStuff, true);
-                Runtime.MessageCollector.AddMessage(MessageClass.InformationMsg,
-                                                    string.Format(Language.PuttyHandle, PuttyHandle), true);
-                Runtime.MessageCollector.AddMessage(MessageClass.InformationMsg,
-                                                    string.Format(Language.PuttyTitle, PuttyProcess.MainWindowTitle),
-                                                    true);
-                Runtime.MessageCollector.AddMessage(MessageClass.InformationMsg,
-                                                    string.Format(Language.PanelHandle,
-                                                                  InterfaceControl.Parent.Handle), true);
+                Runtime.MessageCollector.AddMessage(MessageClass.InformationMsg, string.Format(Language.PuttyHandle, PuttyHandle), true);
+                Runtime.MessageCollector.AddMessage(MessageClass.InformationMsg, string.Format(Language.PuttyTitle, PuttyProcess.MainWindowTitle), true);
+                Runtime.MessageCollector.AddMessage(MessageClass.InformationMsg, string.Format(Language.PanelHandle, InterfaceControl.Parent.Handle), true);
 
                 if (!string.IsNullOrEmpty(InterfaceControl.Info?.OpeningCommand))
                 {
@@ -215,9 +215,7 @@ namespace mRemoteNG.Connection.Protocol
             }
             catch (Exception ex)
             {
-                Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg,
-                                                    Language.ConnectionFailed + Environment.NewLine +
-                                                    ex.Message);
+                Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg, Language.ConnectionFailed + Environment.NewLine + ex.Message);
                 return false;
             }
         }
@@ -230,9 +228,7 @@ namespace mRemoteNG.Connection.Protocol
             }
             catch (Exception ex)
             {
-                Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg,
-                                                    Language.PuttyFocusFailed + Environment.NewLine + ex.Message,
-                                                    true);
+                Runtime.MessageCollector.AddMessage(MessageClass.ErrorMsg, Language.PuttyFocusFailed + Environment.NewLine + ex.Message, true);
             }
         }
 

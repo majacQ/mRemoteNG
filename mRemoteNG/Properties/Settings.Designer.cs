@@ -12,7 +12,7 @@ namespace mRemoteNG.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.3.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.2.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,210 +25,6 @@ namespace mRemoteNG.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
-        public global::System.Drawing.Point MainFormLocation {
-            get {
-                return ((global::System.Drawing.Point)(this["MainFormLocation"]));
-            }
-            set {
-                this["MainFormLocation"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
-        public global::System.Drawing.Size MainFormSize {
-            get {
-                return ((global::System.Drawing.Size)(this["MainFormSize"]));
-            }
-            set {
-                this["MainFormSize"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Normal")]
-        public global::System.Windows.Forms.FormWindowState MainFormState {
-            get {
-                return ((global::System.Windows.Forms.FormWindowState)(this["MainFormState"]));
-            }
-            set {
-                this["MainFormState"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool MainFormKiosk {
-            get {
-                return ((bool)(this["MainFormKiosk"]));
-            }
-            set {
-                this["MainFormKiosk"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool DoUpgrade {
-            get {
-                return ((bool)(this["DoUpgrade"]));
-            }
-            set {
-                this["DoUpgrade"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string CustomPuttyPath {
-            get {
-                return ((string)(this["CustomPuttyPath"]));
-            }
-            set {
-                this["CustomPuttyPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool SwitchToMCOnInformation {
-            get {
-                return ((bool)(this["SwitchToMCOnInformation"]));
-            }
-            set {
-                this["SwitchToMCOnInformation"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool SwitchToMCOnWarning {
-            get {
-                return ((bool)(this["SwitchToMCOnWarning"]));
-            }
-            set {
-                this["SwitchToMCOnWarning"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool SwitchToMCOnError {
-            get {
-                return ((bool)(this["SwitchToMCOnError"]));
-            }
-            set {
-                this["SwitchToMCOnError"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool LoadConsFromCustomLocation {
-            get {
-                return ((bool)(this["LoadConsFromCustomLocation"]));
-            }
-            set {
-                this["LoadConsFromCustomLocation"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string CustomConsPath {
-            get {
-                return ((string)(this["CustomConsPath"]));
-            }
-            set {
-                this["CustomConsPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool SaveConsOnExit {
-            get {
-                return ((bool)(this["SaveConsOnExit"]));
-            }
-            set {
-                this["SaveConsOnExit"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool CheckForUpdatesOnStartup {
-            get {
-                return ((bool)(this["CheckForUpdatesOnStartup"]));
-            }
-            set {
-                this["CheckForUpdatesOnStartup"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ShowDescriptionTooltipsInTree {
-            get {
-                return ((bool)(this["ShowDescriptionTooltipsInTree"]));
-            }
-            set {
-                this["ShowDescriptionTooltipsInTree"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ShowSystemTrayIcon {
-            get {
-                return ((bool)(this["ShowSystemTrayIcon"]));
-            }
-            set {
-                this["ShowSystemTrayIcon"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool OpenTabsRightOfSelected {
-            get {
-                return ((bool)(this["OpenTabsRightOfSelected"]));
-            }
-            set {
-                this["OpenTabsRightOfSelected"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ShowLogonInfoOnTabs {
-            get {
-                return ((bool)(this["ShowLogonInfoOnTabs"]));
-            }
-            set {
-                this["ShowLogonInfoOnTabs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool SingleClickOnConnectionOpensIt {
             get {
@@ -236,174 +32,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["SingleClickOnConnectionOpensIt"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("noinfo")]
-        public string EmptyCredentials {
-            get {
-                return ((string)(this["EmptyCredentials"]));
-            }
-            set {
-                this["EmptyCredentials"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string DefaultUsername {
-            get {
-                return ((string)(this["DefaultUsername"]));
-            }
-            set {
-                this["DefaultUsername"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string DefaultPassword {
-            get {
-                return ((string)(this["DefaultPassword"]));
-            }
-            set {
-                this["DefaultPassword"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string DefaultDomain {
-            get {
-                return ((string)(this["DefaultDomain"]));
-            }
-            set {
-                this["DefaultDomain"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UseCustomPuttyPath {
-            get {
-                return ((bool)(this["UseCustomPuttyPath"]));
-            }
-            set {
-                this["UseCustomPuttyPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool FirstStart {
-            get {
-                return ((bool)(this["FirstStart"]));
-            }
-            set {
-                this["FirstStart"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ShowProtocolOnTabs {
-            get {
-                return ((bool)(this["ShowProtocolOnTabs"]));
-            }
-            set {
-                this["ShowProtocolOnTabs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ResetPanels {
-            get {
-                return ((bool)(this["ResetPanels"]));
-            }
-            set {
-                this["ResetPanels"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UpdateUseProxy {
-            get {
-                return ((bool)(this["UpdateUseProxy"]));
-            }
-            set {
-                this["UpdateUseProxy"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string UpdateProxyAddress {
-            get {
-                return ((string)(this["UpdateProxyAddress"]));
-            }
-            set {
-                this["UpdateProxyAddress"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("80")]
-        public int UpdateProxyPort {
-            get {
-                return ((int)(this["UpdateProxyPort"]));
-            }
-            set {
-                this["UpdateProxyPort"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UpdateProxyUseAuthentication {
-            get {
-                return ((bool)(this["UpdateProxyUseAuthentication"]));
-            }
-            set {
-                this["UpdateProxyUseAuthentication"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string UpdateProxyAuthUser {
-            get {
-                return ((string)(this["UpdateProxyAuthUser"]));
-            }
-            set {
-                this["UpdateProxyAuthUser"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string UpdateProxyAuthPass {
-            get {
-                return ((string)(this["UpdateProxyAuthPass"]));
-            }
-            set {
-                this["UpdateProxyAuthPass"] = value;
             }
         }
         
@@ -428,6 +56,18 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["ConDefaultProtocol"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("eu-central-1")]
+        public string ConDefaultEC2Region {
+            get {
+                return ((string)(this["ConDefaultEC2Region"]));
+            }
+            set {
+                this["ConDefaultEC2Region"] = value;
             }
         }
         
@@ -613,42 +253,6 @@ namespace mRemoteNG.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
-        public int MaxPuttyWaitTime {
-            get {
-                return ((int)(this["MaxPuttyWaitTime"]));
-            }
-            set {
-                this["MaxPuttyWaitTime"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool SingleInstance {
-            get {
-                return ((bool)(this["SingleInstance"]));
-            }
-            set {
-                this["SingleInstance"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool OpenConsFromLastSession {
-            get {
-                return ((bool)(this["OpenConsFromLastSession"]));
-            }
-            set {
-                this["OpenConsFromLastSession"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool NoReconnect {
             get {
@@ -656,18 +260,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["NoReconnect"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int AutoSaveEveryMinutes {
-            get {
-                return ((int)(this["AutoSaveEveryMinutes"]));
-            }
-            set {
-                this["AutoSaveEveryMinutes"] = value;
             }
         }
         
@@ -752,66 +344,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["QuickyTBParentDock"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ResetToolbars {
-            get {
-                return ((bool)(this["ResetToolbars"]));
-            }
-            set {
-                this["ResetToolbars"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UseSQLServer {
-            get {
-                return ((bool)(this["UseSQLServer"]));
-            }
-            set {
-                this["UseSQLServer"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SQLHost {
-            get {
-                return ((string)(this["SQLHost"]));
-            }
-            set {
-                this["SQLHost"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SQLUser {
-            get {
-                return ((string)(this["SQLUser"]));
-            }
-            set {
-                this["SQLUser"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SQLPass {
-            get {
-                return ((string)(this["SQLPass"]));
-            }
-            set {
-                this["SQLPass"] = value;
             }
         }
         
@@ -1153,42 +685,6 @@ namespace mRemoteNG.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool DoubleClickOnTabClosesIt {
-            get {
-                return ((bool)(this["DoubleClickOnTabClosesIt"]));
-            }
-            set {
-                this["DoubleClickOnTabClosesIt"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ReconnectOnDisconnect {
-            get {
-                return ((bool)(this["ReconnectOnDisconnect"]));
-            }
-            set {
-                this["ReconnectOnDisconnect"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AlwaysShowPanelSelectionDlg {
-            get {
-                return ((bool)(this["AlwaysShowPanelSelectionDlg"]));
-            }
-            set {
-                this["AlwaysShowPanelSelectionDlg"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("AuthVNC")]
         public string ConDefaultVNCAuthMode {
             get {
@@ -1454,18 +950,6 @@ namespace mRemoteNG.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool MinimizeToTray {
-            get {
-                return ((bool)(this["MinimizeToTray"]));
-            }
-            set {
-                this["MinimizeToTray"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool SingleClickSwitchesToOpenConnection {
             get {
                 return ((bool)(this["SingleClickSwitchesToOpenConnection"]));
@@ -1496,18 +980,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["InhDefaultRDPAuthenticationLevel"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5500")]
-        public int UVNCSCPort {
-            get {
-                return ((int)(this["UVNCSCPort"]));
-            }
-            set {
-                this["UVNCSCPort"] = value;
             }
         }
         
@@ -1561,18 +1033,6 @@ namespace mRemoteNG.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool EncryptCompleteConnectionsFile {
-            get {
-                return ((bool)(this["EncryptCompleteConnectionsFile"]));
-            }
-            set {
-                this["EncryptCompleteConnectionsFile"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ConDefaultUserField {
             get {
@@ -1616,54 +1076,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["InhDefaultExtApp"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CheckForUpdatesAsked {
-            get {
-                return ((bool)(this["CheckForUpdatesAsked"]));
-            }
-            set {
-                this["CheckForUpdatesAsked"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("14")]
-        public int CheckForUpdatesFrequencyDays {
-            get {
-                return ((int)(this["CheckForUpdatesFrequencyDays"]));
-            }
-            set {
-                this["CheckForUpdatesFrequencyDays"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1980-01-01")]
-        public global::System.DateTime CheckForUpdatesLastCheck {
-            get {
-                return ((global::System.DateTime)(this["CheckForUpdatesLastCheck"]));
-            }
-            set {
-                this["CheckForUpdatesLastCheck"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UpdatePending {
-            get {
-                return ((bool)(this["UpdatePending"]));
-            }
-            set {
-                this["UpdatePending"] = value;
             }
         }
         
@@ -1957,66 +1369,6 @@ namespace mRemoteNG.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Drawing.Size MainFormRestoreSize {
-            get {
-                return ((global::System.Drawing.Size)(this["MainFormRestoreSize"]));
-            }
-            set {
-                this["MainFormRestoreSize"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Drawing.Point MainFormRestoreLocation {
-            get {
-                return ((global::System.Drawing.Point)(this["MainFormRestoreLocation"]));
-            }
-            set {
-                this["MainFormRestoreLocation"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("mRemoteNG")]
-        public string SQLDatabaseName {
-            get {
-                return ((string)(this["SQLDatabaseName"]));
-            }
-            set {
-                this["SQLDatabaseName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public int BackupFileKeepCount {
-            get {
-                return ((int)(this["BackupFileKeepCount"]));
-            }
-            set {
-                this["BackupFileKeepCount"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("{0}.{1:yyyyMMdd-HHmmssffff}.backup")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public string BackupFileNameFormat {
-            get {
-                return ((string)(this["BackupFileNameFormat"]));
-            }
-            set {
-                this["BackupFileNameFormat"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool InhDefaultUseCredSsp {
             get {
@@ -2042,62 +1394,60 @@ namespace mRemoteNG.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool InhDefaultUseRestrictedAdmin {
+            get {
+                return ((bool)(this["InhDefaultUseRestrictedAdmin"]));
+            }
+            set {
+                this["InhDefaultUseRestrictedAdmin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ConDefaultUseRestrictedAdmin {
+            get {
+                return ((bool)(this["ConDefaultUseRestrictedAdmin"]));
+            }
+            set {
+                this["ConDefaultUseRestrictedAdmin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool InhDefaultUseRCG {
+            get {
+                return ((bool)(this["InhDefaultUseRCG"]));
+            }
+            set {
+                this["InhDefaultUseRCG"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ConDefaultUseRCG {
+            get {
+                return ((bool)(this["ConDefaultUseRCG"]));
+            }
+            set {
+                this["ConDefaultUseRCG"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ConDefaultUseVmId {
             get {
                 return ((bool)(this["ConDefaultUseVmId"]));
             }
             set {
                 this["ConDefaultUseVmId"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public bool AlwaysShowPanelTabs {
-            get {
-                return ((bool)(this["AlwaysShowPanelTabs"]));
-            }
-            set {
-                this["AlwaysShowPanelTabs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public bool IdentifyQuickConnectTabs {
-            get {
-                return ((bool)(this["IdentifyQuickConnectTabs"]));
-            }
-            set {
-                this["IdentifyQuickConnectTabs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("release")]
-        public string UpdateChannel {
-            get {
-                return ((string)(this["UpdateChannel"]));
-            }
-            set {
-                this["UpdateChannel"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ThemeName {
-            get {
-                return ((string)(this["ThemeName"]));
-            }
-            set {
-                this["ThemeName"] = value;
             }
         }
         
@@ -2146,15 +1496,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["CompatibilityWarnLenovoAutoScrollUtility"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://mremoteng.org/")]
-        public string UpdateAddress {
-            get {
-                return ((string)(this["UpdateAddress"]));
             }
         }
         
@@ -2247,18 +1588,6 @@ namespace mRemoteNG.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ShowCompleteConsPathInTitle {
-            get {
-                return ((bool)(this["ShowCompleteConsPathInTitle"]));
-            }
-            set {
-                this["ShowCompleteConsPathInTitle"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("20")]
         public int ConRDPOverallConnectionTimeout {
             get {
@@ -2266,42 +1595,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["ConRDPOverallConnectionTimeout"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("AES")]
-        public global::mRemoteNG.Security.BlockCipherEngines EncryptionEngine {
-            get {
-                return ((global::mRemoteNG.Security.BlockCipherEngines)(this["EncryptionEngine"]));
-            }
-            set {
-                this["EncryptionEngine"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("GCM")]
-        public global::mRemoteNG.Security.BlockCipherModes EncryptionBlockCipherMode {
-            get {
-                return ((global::mRemoteNG.Security.BlockCipherModes)(this["EncryptionBlockCipherMode"]));
-            }
-            set {
-                this["EncryptionBlockCipherMode"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
-        public int EncryptionKeyDerivationIterations {
-            get {
-                return ((int)(this["EncryptionKeyDerivationIterations"]));
-            }
-            set {
-                this["EncryptionKeyDerivationIterations"] = value;
             }
         }
         
@@ -2403,174 +1696,6 @@ namespace mRemoteNG.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LogFilePath {
-            get {
-                return ((string)(this["LogFilePath"]));
-            }
-            set {
-                this["LogFilePath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool TextLogMessageWriterWriteDebugMsgs {
-            get {
-                return ((bool)(this["TextLogMessageWriterWriteDebugMsgs"]));
-            }
-            set {
-                this["TextLogMessageWriterWriteDebugMsgs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool TextLogMessageWriterWriteInfoMsgs {
-            get {
-                return ((bool)(this["TextLogMessageWriterWriteInfoMsgs"]));
-            }
-            set {
-                this["TextLogMessageWriterWriteInfoMsgs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool TextLogMessageWriterWriteWarningMsgs {
-            get {
-                return ((bool)(this["TextLogMessageWriterWriteWarningMsgs"]));
-            }
-            set {
-                this["TextLogMessageWriterWriteWarningMsgs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool TextLogMessageWriterWriteErrorMsgs {
-            get {
-                return ((bool)(this["TextLogMessageWriterWriteErrorMsgs"]));
-            }
-            set {
-                this["TextLogMessageWriterWriteErrorMsgs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool NotificationPanelWriterWriteDebugMsgs {
-            get {
-                return ((bool)(this["NotificationPanelWriterWriteDebugMsgs"]));
-            }
-            set {
-                this["NotificationPanelWriterWriteDebugMsgs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool NotificationPanelWriterWriteInfoMsgs {
-            get {
-                return ((bool)(this["NotificationPanelWriterWriteInfoMsgs"]));
-            }
-            set {
-                this["NotificationPanelWriterWriteInfoMsgs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool NotificationPanelWriterWriteWarningMsgs {
-            get {
-                return ((bool)(this["NotificationPanelWriterWriteWarningMsgs"]));
-            }
-            set {
-                this["NotificationPanelWriterWriteWarningMsgs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool NotificationPanelWriterWriteErrorMsgs {
-            get {
-                return ((bool)(this["NotificationPanelWriterWriteErrorMsgs"]));
-            }
-            set {
-                this["NotificationPanelWriterWriteErrorMsgs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool PopupMessageWriterWriteDebugMsgs {
-            get {
-                return ((bool)(this["PopupMessageWriterWriteDebugMsgs"]));
-            }
-            set {
-                this["PopupMessageWriterWriteDebugMsgs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool PopupMessageWriterWriteInfoMsgs {
-            get {
-                return ((bool)(this["PopupMessageWriterWriteInfoMsgs"]));
-            }
-            set {
-                this["PopupMessageWriterWriteInfoMsgs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool PopupMessageWriterWriteWarningMsgs {
-            get {
-                return ((bool)(this["PopupMessageWriterWriteWarningMsgs"]));
-            }
-            set {
-                this["PopupMessageWriterWriteWarningMsgs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool PopupMessageWriterWriteErrorMsgs {
-            get {
-                return ((bool)(this["PopupMessageWriterWriteErrorMsgs"]));
-            }
-            set {
-                this["PopupMessageWriterWriteErrorMsgs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool LogToApplicationDirectory {
-            get {
-                return ((bool)(this["LogToApplicationDirectory"]));
-            }
-            set {
-                this["LogToApplicationDirectory"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool PromptUnlockCredReposOnStartup {
             get {
@@ -2578,28 +1703,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["PromptUnlockCredReposOnStartup"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("cs-CZ,de,el,en,en-US,es-AR,es,fr,hu,it,lt,ja-JP,ko-KR,nb-NO,nl,pt,pt-BR,pl,ru,uk," +
-            "tr-TR,zh-CN,zh-TW")]
-        public string SupportedUICultures {
-            get {
-                return ((string)(this["SupportedUICultures"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ThemingActive {
-            get {
-                return ((bool)(this["ThemingActive"]));
-            }
-            set {
-                this["ThemingActive"] = value;
             }
         }
         
@@ -2653,18 +1756,6 @@ namespace mRemoteNG.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool SaveConnectionsAfterEveryEdit {
-            get {
-                return ((bool)(this["SaveConnectionsAfterEveryEdit"]));
-            }
-            set {
-                this["SaveConnectionsAfterEveryEdit"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool UseFilterSearch {
             get {
@@ -2678,36 +1769,12 @@ namespace mRemoteNG.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool SQLReadOnly {
-            get {
-                return ((bool)(this["SQLReadOnly"]));
-            }
-            set {
-                this["SQLReadOnly"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool LockToolbars {
             get {
                 return ((bool)(this["LockToolbars"]));
             }
             set {
                 this["LockToolbars"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool RdpLoadBalanceInfoUseUtf8 {
-            get {
-                return ((bool)(this["RdpLoadBalanceInfoUseUtf8"]));
-            }
-            set {
-                this["RdpLoadBalanceInfoUseUtf8"] = value;
             }
         }
         
@@ -2750,30 +1817,6 @@ namespace mRemoteNG.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CreateEmptyPanelOnStartUp {
-            get {
-                return ((bool)(this["CreateEmptyPanelOnStartUp"]));
-            }
-            set {
-                this["CreateEmptyPanelOnStartUp"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("General")]
-        public string StartUpPanelName {
-            get {
-                return ((string)(this["StartUpPanelName"]));
-            }
-            set {
-                this["StartUpPanelName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool TrackActiveConnectionInConnectionTree {
             get {
                 return ((bool)(this["TrackActiveConnectionInConnectionTree"]));
@@ -2792,18 +1835,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["PlaceSearchBarAboveConnectionTree"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool AlwaysShowConnectionTabs {
-            get {
-                return ((bool)(this["AlwaysShowConnectionTabs"]));
-            }
-            set {
-                this["AlwaysShowConnectionTabs"] = value;
             }
         }
         
@@ -2840,18 +1871,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["InhDefaultFavorite"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("mssql")]
-        public string SQLServerType {
-            get {
-                return ((string)(this["SQLServerType"]));
-            }
-            set {
-                this["SQLServerType"] = value;
             }
         }
         
@@ -2900,18 +1919,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["InhDefaultUseVmId"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int SaveConnectionsFrequency {
-            get {
-                return ((int)(this["SaveConnectionsFrequency"]));
-            }
-            set {
-                this["SaveConnectionsFrequency"] = value;
             }
         }
         
@@ -2990,18 +1997,6 @@ namespace mRemoteNG.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool StartMinimized {
-            get {
-                return ((bool)(this["StartMinimized"]));
-            }
-            set {
-                this["StartMinimized"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ConDefaultUseEnhancedMode {
             get {
                 return ((bool)(this["ConDefaultUseEnhancedMode"]));
@@ -3020,18 +2015,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["InhDefaultUseEnhancedMode"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CloseToTray {
-            get {
-                return ((bool)(this["CloseToTray"]));
-            }
-            set {
-                this["CloseToTray"] = value;
             }
         }
         
@@ -3109,6 +2092,18 @@ namespace mRemoteNG.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ConDefaultStartProgramWorkDir {
+            get {
+                return ((string)(this["ConDefaultStartProgramWorkDir"]));
+            }
+            set {
+                this["ConDefaultStartProgramWorkDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("EncrBasic")]
         public string ConDefaultICAEncryptionStrength {
             get {
@@ -3128,18 +2123,6 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["InhDefaultICAEncryptionStrength"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool StartFullScreen {
-            get {
-                return ((bool)(this["StartFullScreen"]));
-            }
-            set {
-                this["StartFullScreen"] = value;
             }
         }
         
@@ -3212,6 +2195,90 @@ namespace mRemoteNG.Properties {
             }
             set {
                 this["OpeningCommand"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ConDefaultRDPStartProgram {
+            get {
+                return ((string)(this["ConDefaultRDPStartProgram"]));
+            }
+            set {
+                this["ConDefaultRDPStartProgram"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ConDefaultRDPStartProgramWorkDir {
+            get {
+                return ((string)(this["ConDefaultRDPStartProgramWorkDir"]));
+            }
+            set {
+                this["ConDefaultRDPStartProgramWorkDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ConDefaultEC2InstanceId {
+            get {
+                return ((string)(this["ConDefaultEC2InstanceId"]));
+            }
+            set {
+                this["ConDefaultEC2InstanceId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ConDefaultUserViaAPI {
+            get {
+                return ((string)(this["ConDefaultUserViaAPI"]));
+            }
+            set {
+                this["ConDefaultUserViaAPI"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ConDefaultOpeningCommand {
+            get {
+                return ((string)(this["ConDefaultOpeningCommand"]));
+            }
+            set {
+                this["ConDefaultOpeningCommand"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool InhDefaultUserViaAPI {
+            get {
+                return ((bool)(this["InhDefaultUserViaAPI"]));
+            }
+            set {
+                this["InhDefaultUserViaAPI"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool InhDefaultOpeningCommand {
+            get {
+                return ((bool)(this["InhDefaultOpeningCommand"]));
+            }
+            set {
+                this["InhDefaultOpeningCommand"] = value;
             }
         }
     }

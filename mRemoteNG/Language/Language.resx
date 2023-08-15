@@ -264,6 +264,9 @@
   <data name="CheckboxUpdateUseProxy" xml:space="preserve">
     <value>Use a proxy server to connect</value>
   </data>
+  <data name="UserViaAPI" xml:space="preserve">
+    <value>API User ID</value>
+  </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
   </data>
@@ -967,7 +970,7 @@ If you run into such an error, please create a new connection file!</value>
     <value>Select whether to use bitmap caching or not.</value>
   </data>
   <data name="PropertyDescriptionColors" xml:space="preserve">
-    <value>Select the colour quality to be used.</value>
+    <value>Select the color quality to be used.</value>
   </data>
   <data name="PropertyDescriptionCompression" xml:space="preserve">
     <value>Select the compression value to be used.</value>
@@ -1083,8 +1086,17 @@ If you run into such an error, please create a new connection file!</value>
   <data name="PropertyDescriptionUseCredSsp" xml:space="preserve">
     <value>Use the Credential Security Support Provider (CredSSP) for authentication if it is available.</value>
   </data>
+  <data name="PropertyDescriptionUseRestrictedAdmin" xml:space="preserve">
+    <value>Use restricted admin mode on the target host (local system context).</value>
+  </data>
+  <data name="PropertyDescriptionUseRCG" xml:space="preserve">
+    <value>Use Remote Credential Guard to tunnel authentication on target back to source through the RDP channel.</value>
+  </data>
   <data name="PropertyDescriptionUser1" xml:space="preserve">
     <value>Feel free to enter any information you need here.</value>
+  </data>
+  <data name="PropertyDescriptionUserViaAPI" xml:space="preserve">
+    <value>Enter the ID of user data in external API (e.g. secret server). when used, leave username/password/domain fields empty</value>
   </data>
   <data name="PropertyDescriptionUsername" xml:space="preserve">
     <value>Enter your username.</value>
@@ -1126,7 +1138,7 @@ If you run into such an error, please create a new connection file!</value>
     <value>Cache Bitmaps</value>
   </data>
   <data name="Colors" xml:space="preserve">
-    <value>Colours</value>
+    <value>Colors</value>
   </data>
   <data name="Compression" xml:space="preserve">
     <value>Compression</value>
@@ -1233,6 +1245,12 @@ If you run into such an error, please create a new connection file!</value>
   <data name="UseCredSsp" xml:space="preserve">
     <value>Use CredSSP</value>
   </data>
+  <data name="UseRestrictedAdmin" xml:space="preserve">
+    <value>Use Restricted Admin</value>
+  </data>
+  <data name="UseRCG" xml:space="preserve">
+    <value>Use Remote Credential Guard</value>
+  </data>
   <data name="UserField" xml:space="preserve">
     <value>User Field</value>
   </data>
@@ -1331,19 +1349,19 @@ If you run into such an error, please create a new connection file!</value>
     <value>RDP</value>
   </data>
   <data name="Rdp16777216Colors" xml:space="preserve">
-    <value>16777216 Colours (24-bit)</value>
+    <value>16777216 Colors (24-bit)</value>
   </data>
   <data name="Rdp256Colors" xml:space="preserve">
     <value>256 Colours (8-bit)</value>
   </data>
   <data name="Rdp32768Colors" xml:space="preserve">
-    <value>32768 Colours (15-bit)</value>
+    <value>32768 Colors (15-bit)</value>
   </data>
   <data name="Rdp4294967296Colors" xml:space="preserve">
-    <value>16777216 Colours (32-bit)</value>
+    <value>16777216 Colors (32-bit)</value>
   </data>
   <data name="Rdp65536Colors" xml:space="preserve">
-    <value>65536 Colours (16-bit)</value>
+    <value>65536 Colors (16-bit)</value>
   </data>
   <data name="RdpControlCreationFailed" xml:space="preserve">
     <value>Couldn't create RDP control, please check mRemoteNG requirements.</value>
@@ -2181,13 +2199,91 @@ Nightly Channel includes Alphas, Betas &amp; Release Candidates.</value>
     <value>Alternate shell working directory</value>
     <comment>https://docs.microsoft.com/en-us/windows/win32/termserv/imstscsecuredsettings-workdir</comment>
   </data>
+  <data name="OpeningCommand" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="PropertyDescriptionOpeningCommand" xml:space="preserve">
+    <value>TODO</value>
+  </data>
   <data name="RedirectDrives" xml:space="preserve">
     <value>Disk Drives</value>
   </data>
   <data name="RedirectSmartCards" xml:space="preserve">
     <value>Smart Cards</value>
   </data>
+  <data name="ApplyInheritanceToChildren" xml:space="preserve">
+    <value>Apply inheritance to children</value>
+  </data>
+  <data name="ApplyDefaultInheritance" xml:space="preserve">
+    <value>Apply default inheritance</value>
+  </data>
+  <data name="SmartCard" xml:space="preserve">
+    <value>SmartCard</value>
+  </data>
   <data name="RemoteDesktopServices" xml:space="preserve">
     <value>Remote Desktop Services</value>
+  </data>
+  <data name="EC2InstanceId" xml:space="preserve">
+    <value>EC2 Instance Id</value>
+  </data>
+  <data name="EC2Region" xml:space="preserve">
+    <value>EC2 Region</value>
+  </data>
+  <data name="PropertyDescriptionEC2InstanceId" xml:space="preserve">
+    <value>use this instance id to fetch public ip from aws ec2 instance</value>
+  </data>
+  <data name="PropertyDescriptionEC2Region" xml:space="preserve">
+    <value>fetch aws instance info from this region</value>
+  </data>
+  <data name="ACLPermissionsHidden" xml:space="preserve">
+    <value>Hidden</value>
+    <comment>Permission then option will be hide completly from user</comment>
+  </data>
+  <data name="ACLPermissionsReadOnly" xml:space="preserve">
+    <value>ReadOnly</value>
+    <comment>Permission then option is visible but user can't modify it</comment>
+  </data>
+  <data name="ACLPermissionsWriteAllow" xml:space="preserve">
+    <value>WriteAllow</value>
+    <comment>Permission then user could modify an option value</comment>
+  </data>
+  <data name="lblConnectionsBackupPath" xml:space="preserve">
+    <value>Select location for connection data backup folder</value>
+  </data>
+  <data name="btnBrowsePath" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="lblACL" xml:space="preserve">
+    <value>ACL for user</value>
+  </data>
+  <data name="lblBackupEnable" xml:space="preserve">
+    <value>Backups for connection data</value>
+  </data>
+  <data name="lblBackupNameFormat" xml:space="preserve">
+    <value>Backup file name format</value>
+  </data>
+  <data name="lblBackupType" xml:space="preserve">
+    <value>Backup type</value>
+  </data>
+  <data name="lblConnectionsBackupFrequency" xml:space="preserve">
+    <value>Connection Backup Frequency</value>
+  </data>
+  <data name="lblConnectionsBackupMaxCount" xml:space="preserve">
+    <value>Maximum number of backups</value>
+  </data>
+  <data name="PageСontrolInOptionsMenu" xml:space="preserve">
+    <value>Page control in Options menu</value>
+  </data>
+  <data name="ShowForUser" xml:space="preserve">
+    <value>Show for user</value>
+  </data>
+  <data name="FiltermRemoteRemoteDesktopManagerCSV" xml:space="preserve">
+    <value>Remote Desktop Manager Files (*.csv)</value>
+  </data>
+  <data name="FileMenu" xml:space="preserve">
+    <value>File menu</value>
+  </data>
+  <data name="FileMenuWillBeHiddenNow" xml:space="preserve">
+    <value>File menu is hidded now. Press Alt button to peek</value>
   </data>
 </root>

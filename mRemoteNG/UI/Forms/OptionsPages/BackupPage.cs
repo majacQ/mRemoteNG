@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using mRemoteNG.App;
 using mRemoteNG.Config.Connections;
+using mRemoteNG.Config.ACL;
 using mRemoteNG.Security;
-using mRemoteNG.Properties;
 using mRemoteNG.Resources.Language;
 
 namespace mRemoteNG.UI.Forms.OptionsPages
@@ -13,11 +14,12 @@ namespace mRemoteNG.UI.Forms.OptionsPages
     public sealed partial class BackupPage
     {
         private readonly FrmMain _frmMain = FrmMain.Default;
-        private List<DropdownList> _connectionBackup;
-
+        private List<DropdownList> _permissionsListing;
+        
         public BackupPage()
         {
             InitializeComponent();
+            Check4ACL();
             ApplyTheme();
             PageIcon = Resources.ImageConverter.GetImageAsIcon(Properties.Resources.DocumentsFolder_16x);
         }
@@ -28,122 +30,260 @@ namespace mRemoteNG.UI.Forms.OptionsPages
             set { }
         }
 
+        public void Check4ACL()
+        {
+            if (Properties.rbac.Default.ActiveRole == "AdminRole")
+            {
+                lblACL.Visible = true;
+                lblBacupPageShowInOptionsMenu.Visible = true;
+                pnlShowForUser.Visible = true;
+
+                plBackupEnable.Visible = true;
+                plBackupType.Visible = true;
+                plBackupFrequency.Visible = true;
+                plBackupNumber.Visible = true;
+                plBackupNameFormat.Visible = true;
+                plBackupLocation.Visible = true;
+
+                cbBackupEnableACL.Visible = true;
+                cbBackupTypeACL.Visible = true;
+                cbBackupFrequencyACL.Visible = true;
+                cbBackupNumberACL.Visible = true;
+                cbBackupNameFormatACL.Visible = true;
+                cbBackupLocationACL.Visible = true;
+
+                lblBackupEnable.Visible = true;
+                lblBackupEnable.Enabled = true;
+                pnlBackupEnable.Visible = true;
+                pnlBackupEnable.Enabled = true;
+                lblBackupType.Visible = true;
+                lblBackupType.Enabled = true;
+                pnlBackupType.Visible = true;
+                pnlBackupType.Enabled = true;
+                plMakeBackup.Visible = true;
+                plMakeBackup.Enabled = true;
+                numMaxBackups.Visible = true;
+                numMaxBackups.Enabled = true;
+                txtBackupNameFormat.Visible = true;
+                txtBackupNameFormat.Enabled = true;
+                txtConnectionsBackupPath.Visible = true;
+                txtConnectionsBackupPath.Enabled = true;
+                btnBrowsePath.Visible = true;
+                btnBrowsePath.Enabled = true;
+                lblMakeBackup.Visible = true;
+                lblMakeBackup.Enabled = true;
+                lblConnectionsBackupMaxCount.Visible = true;
+                lblConnectionsBackupMaxCount.Enabled = true;
+                lblBackupNameFormat.Visible = true;
+                lblBackupNameFormat.Enabled = true;
+                lblConnectionsBackupPath.Visible = true;
+                lblConnectionsBackupPath.Enabled = true;
+            } else
+            {
+                lblACL.Visible = false;
+                lblBacupPageShowInOptionsMenu.Visible = false;
+                pnlShowForUser.Visible = false;
+
+                cbBackupEnableACL.Visible = false;
+                cbBackupTypeACL.Visible = false;
+                cbBackupFrequencyACL.Visible = false;
+                cbBackupNumberACL.Visible = false;
+                cbBackupNameFormatACL.Visible = false;
+                cbBackupLocationACL.Visible = false;
+
+                lblBackupEnable.Visible = Properties.OptionsBackupPage.Default.cbBackupEnableACL == 0 ? false : true;
+                lblBackupEnable.Enabled = Properties.OptionsBackupPage.Default.cbBackupEnableACL == 1 ? false : true;
+                pnlBackupEnable.Visible = Properties.OptionsBackupPage.Default.cbBackupEnableACL == 0 ? false : true;
+                pnlBackupEnable.Enabled = Properties.OptionsBackupPage.Default.cbBackupEnableACL == 1 ? false : true;
+
+                lblBackupType.Visible = Properties.OptionsBackupPage.Default.cbBackupTypeACL == 0 ? false : true;
+                lblBackupType.Enabled = Properties.OptionsBackupPage.Default.cbBackupTypeACL == 1 ? false : true;
+                pnlBackupType.Visible = Properties.OptionsBackupPage.Default.cbBackupTypeACL == 0 ? false : true;
+                pnlBackupType.Enabled = Properties.OptionsBackupPage.Default.cbBackupTypeACL == 1 ? false : true;
+
+                lblMakeBackup.Visible = Properties.OptionsBackupPage.Default.cbBackupFrequencyACL == 0 ? false : true;
+                lblMakeBackup.Enabled = Properties.OptionsBackupPage.Default.cbBackupFrequencyACL == 1 ? false : true;
+                plMakeBackup.Visible = Properties.OptionsBackupPage.Default.cbBackupFrequencyACL == 0 ? false : true;
+                plMakeBackup.Enabled = Properties.OptionsBackupPage.Default.cbBackupFrequencyACL == 1 ? false : true;
+
+                lblConnectionsBackupMaxCount.Visible = Properties.OptionsBackupPage.Default.cbBackupNumberACL == 0 ? false : true;
+                lblConnectionsBackupMaxCount.Enabled = Properties.OptionsBackupPage.Default.cbBackupNumberACL == 1 ? false : true;
+                numMaxBackups.Visible = Properties.OptionsBackupPage.Default.cbBackupNumberACL == 0 ? false : true;
+                numMaxBackups.Enabled = Properties.OptionsBackupPage.Default.cbBackupNumberACL == 1 ? false : true;
+
+                lblBackupNameFormat.Visible = Properties.OptionsBackupPage.Default.cbBackupNameFormatACL == 0 ? false : true;
+                lblBackupNameFormat.Enabled = Properties.OptionsBackupPage.Default.cbBackupNameFormatACL == 1 ? false : true;
+                txtBackupNameFormat.Visible = Properties.OptionsBackupPage.Default.cbBackupNameFormatACL == 0 ? false : true;
+                txtBackupNameFormat.Enabled = Properties.OptionsBackupPage.Default.cbBackupNameFormatACL == 1 ? false : true;
+
+                lblConnectionsBackupPath.Visible = Properties.OptionsBackupPage.Default.cbBackupLocationACL == 0 ? false : true;
+                lblConnectionsBackupPath.Enabled = Properties.OptionsBackupPage.Default.cbBackupLocationACL == 1 ? false : true;
+                txtConnectionsBackupPath.Visible = Properties.OptionsBackupPage.Default.cbBackupLocationACL == 0 ? false : true;
+                txtConnectionsBackupPath.Enabled = Properties.OptionsBackupPage.Default.cbBackupLocationACL == 1 ? false : true;
+                btnBrowsePath.Visible = Properties.OptionsBackupPage.Default.cbBackupLocationACL == 0 ? false : true;
+                btnBrowsePath.Enabled = Properties.OptionsBackupPage.Default.cbBackupLocationACL == 1 ? false : true;
+            }
+        }
         public override void ApplyLanguage()
         {
             base.ApplyLanguage();
 
-            buttonBrowsePath.Text = Language.strBrowse;
-
-            _connectionBackup = new List<DropdownList>
+            _permissionsListing = new List<DropdownList>
             {
-                {
-                    new DropdownList((int) ConnectionsBackupFrequencyEnum.Never,
-                        Language.ConnectionsBackupFrequencyNever)
-                },
-                {
-                    new DropdownList((int) ConnectionsBackupFrequencyEnum.OnEdit,
-                        Language.ConnectionsBackupFrequencyOnEdit)
-                },
-                {
-                    new DropdownList((int) ConnectionsBackupFrequencyEnum.OnExit,
-                        Language.ConnectionsBackupFrequencyOnExit)
-                },
-                {
-                    new DropdownList((int) ConnectionsBackupFrequencyEnum.Daily,
-                        Language.ConnectionsBackupFrequencyDaily)
-                },
-                {
-                    new DropdownList((int) ConnectionsBackupFrequencyEnum.Weekly,
-                        Language.ConnectionsBackupFrequencyWeekly)
-                },
-                //{ new DropdownList( (int)ConnectionsBackupFrequencyEnum.Custom, Language.ConnectionsBackupFrequencyCustom)}
+                {new DropdownList((int) ACLPermissions.Hidden, Language.ACLPermissionsHidden)},
+                {new DropdownList((int) ACLPermissions.ReadOnly, Language.ACLPermissionsReadOnly)},
+                {new DropdownList((int) ACLPermissions.WriteAllow, Language.ACLPermissionsWriteAllow)},
             };
 
-            cmbConnectionBackupFrequency.DataSource = _connectionBackup;
-            cmbConnectionBackupFrequency.DisplayMember = "DisplayString";
-            cmbConnectionBackupFrequency.ValueMember = "Index";
+            btnBrowsePath.Text = Language.strBrowse;
 
-            lblConnectionsBackupFrequency.Text = Language.strConnectionBackupFrequency;
+            lblBacupPageShowInOptionsMenu.Text = Language.PageСontrolInOptionsMenu;
+            cbBacupPageInOptionMenu.Text = Language.ShowForUser;
+
+            cbBackupEnableACL.BindingContext = new BindingContext();
+            cbBackupEnableACL.DataSource = _permissionsListing;
+            cbBackupEnableACL.DisplayMember = "DisplayString";
+            cbBackupEnableACL.ValueMember = "Index";
+
+            cbBackupTypeACL.BindingContext = new BindingContext();
+            cbBackupTypeACL.DataSource = _permissionsListing;
+            cbBackupTypeACL.DisplayMember = "DisplayString";
+            cbBackupTypeACL.ValueMember = "Index";
+
+            cbBackupFrequencyACL.BindingContext = new BindingContext();
+            cbBackupFrequencyACL.DataSource = _permissionsListing;
+            cbBackupFrequencyACL.DisplayMember = "DisplayString";
+            cbBackupFrequencyACL.ValueMember = "Index";
+
+            cbBackupNumberACL.BindingContext = new BindingContext();
+            cbBackupNumberACL.DataSource = _permissionsListing;
+            cbBackupNumberACL.DisplayMember = "DisplayString";
+            cbBackupNumberACL.ValueMember = "Index";
+
+            cbBackupNameFormatACL.BindingContext = new BindingContext();
+            cbBackupNameFormatACL.DataSource = _permissionsListing;
+            cbBackupNameFormatACL.DisplayMember = "DisplayString";
+            cbBackupNameFormatACL.ValueMember = "Index";
+
+            cbBackupLocationACL.BindingContext = new BindingContext();
+            cbBackupLocationACL.DataSource = _permissionsListing;
+            cbBackupLocationACL.DisplayMember = "DisplayString";
+            cbBackupLocationACL.ValueMember = "Index";
+
+            lblMakeBackup.Text = Language.strConnectionBackupFrequency;
             lblConnectionsBackupMaxCount.Text = Language.strConnectionsBackupMaxCount;
             lblConnectionsBackupPath.Text = Language.strConnectionsBackupPath;
         }
 
         public override void LoadSettings()
         {
-            numMaxBackups.Value = Convert.ToDecimal(Settings.Default.BackupFileKeepCount);
+            numMaxBackups.Value = Convert.ToDecimal(Properties.OptionsBackupPage.Default.BackupFileKeepCount);
 
-            if (Settings.Default.SaveConnectionsFrequency == (int) ConnectionsBackupFrequencyEnum.Unassigned)
-            {
-                if (Settings.Default.SaveConnectionsAfterEveryEdit)
-                {
-                    Settings.Default.SaveConnectionsFrequency = (int) ConnectionsBackupFrequencyEnum.OnEdit;
-                }
-                else if (Settings.Default.SaveConsOnExit)
-                {
-                    Settings.Default.SaveConnectionsFrequency = (int) ConnectionsBackupFrequencyEnum.OnExit;
-                }
-                else
-                {
-                    Settings.Default.SaveConnectionsFrequency = (int) ConnectionsBackupFrequencyEnum.Never;
-                }
-            }
+            cbBacupPageInOptionMenu.Checked = Properties.OptionsBackupPage.Default.cbBacupPageInOptionMenu;
+            cbBackupEnableACL.SelectedValue = Properties.OptionsBackupPage.Default.cbBackupEnableACL;
+            cbBackupTypeACL.SelectedValue = Properties.OptionsBackupPage.Default.cbBackupTypeACL;
+            cbBackupFrequencyACL.SelectedValue = Properties.OptionsBackupPage.Default.cbBackupFrequencyACL;
+            cbBackupNumberACL.SelectedValue = Properties.OptionsBackupPage.Default.cbBackupNumberACL;
+            cbBackupNameFormatACL.SelectedValue = Properties.OptionsBackupPage.Default.cbBackupNameFormatACL;
+            cbBackupLocationACL.SelectedValue = Properties.OptionsBackupPage.Default.cbBackupLocationACL;
+            txtBackupNameFormat.Text = Properties.OptionsBackupPage.Default.BackupFileNameFormat;
 
-            cmbConnectionBackupFrequency.SelectedValue = Settings.Default.SaveConnectionsFrequency;
-            textBoxConnectionBackupPath.Text = Settings.Default.CustomConsPath;
+            cbMakeBackupOnExit.Checked = Properties.OptionsBackupPage.Default.BackupConnectionsOnExit;
+            cbMakeBackupOnEdit.Checked = Properties.OptionsBackupPage.Default.BackupConnectionsOnEdit;
+            cbMakeBackupOnSave.Checked = Properties.OptionsBackupPage.Default.BackupConnectionsOnSave;
+
+            numMaxBackups.Value = Properties.OptionsBackupPage.Default.BackupFileKeepCount;
+            if (numMaxBackups.Value == 0)
+                rbBackupEnableDisable.Checked = true;
+            txtConnectionsBackupPath.Text = Properties.OptionsBackupPage.Default.BackupLocation;
 
         }
 
         public override void SaveSettings()
         {
-            Settings.Default.BackupFileKeepCount = (int) numMaxBackups.Value;
-
-            if (Settings.Default.AutoSaveEveryMinutes > 0)
+            Properties.OptionsBackupPage.Default.BackupFileKeepCount = (int) numMaxBackups.Value;
+            /*
+            if (Properties.OptionsBackupPage.Default.AutoSaveEveryMinutes > 0)
             {
-                _frmMain.tmrAutoSave.Interval = Settings.Default.AutoSaveEveryMinutes * 60000;
+                _frmMain.tmrAutoSave.Interval = Properties.OptionsBackupPage.Default.AutoSaveEveryMinutes * 60000;
                 _frmMain.tmrAutoSave.Enabled = true;
             }
             else
             {
                 _frmMain.tmrAutoSave.Enabled = false;
             }
+            */
+            Properties.OptionsBackupPage.Default.cbBackupEnableACL = (int) cbBackupEnableACL.SelectedValue;
+            Properties.OptionsBackupPage.Default.cbBackupTypeACL = (int) cbBackupTypeACL.SelectedValue;
+            Properties.OptionsBackupPage.Default.cbBackupFrequencyACL = (int) cbBackupFrequencyACL.SelectedValue;
+            Properties.OptionsBackupPage.Default.cbBackupNumberACL = (int) cbBackupNumberACL.SelectedValue;
+            Properties.OptionsBackupPage.Default.cbBackupNameFormatACL = (int) cbBackupNameFormatACL.SelectedValue;
+            Properties.OptionsBackupPage.Default.cbBackupLocationACL = (int) cbBackupLocationACL.SelectedValue;
 
-            Settings.Default.SaveConnectionsFrequency = (int) cmbConnectionBackupFrequency.SelectedValue;
+            Properties.OptionsBackupPage.Default.BackupFileNameFormat = (string) txtBackupNameFormat.Text;
 
-            if (textBoxConnectionBackupPath.Text.Trim().Length <= 0)
-            {
-                Settings.Default.LoadConsFromCustomLocation = false;
-                Settings.Default.CustomConsPath = String.Empty;
-            }
-            else
-            {
-                var newFileName = textBoxConnectionBackupPath.Text;
+            Properties.OptionsBackupPage.Default.BackupConnectionsOnExit = (bool) cbMakeBackupOnExit.Checked;
+            Properties.OptionsBackupPage.Default.BackupConnectionsOnEdit = (bool) cbMakeBackupOnEdit.Checked;
+            Properties.OptionsBackupPage.Default.BackupConnectionsOnSave = (bool) cbMakeBackupOnSave.Checked;
 
-                Runtime.ConnectionsService.SaveConnections(Runtime.ConnectionsService.ConnectionTreeModel, false,
-                    new SaveFilter(), newFileName);
+            Properties.OptionsBackupPage.Default.BackupFileKeepCount = (int) numMaxBackups.Value;
 
-                if (newFileName == Runtime.ConnectionsService.GetDefaultStartupConnectionFileName())
-                {
-                    Settings.Default.LoadConsFromCustomLocation = false;
-                }
-                else
-                {
-                    Settings.Default.LoadConsFromCustomLocation = true;
-                    Settings.Default.CustomConsPath = newFileName;
-                }
-            }
+            Properties.OptionsBackupPage.Default.BackupLocation = (string) txtConnectionsBackupPath.Text;
+            
+            Properties.OptionsBackupPage.Default.cbBacupPageInOptionMenu = cbBacupPageInOptionMenu.Checked;
 
-            //Obsolete. Set to false
-            Settings.Default.SaveConnectionsAfterEveryEdit = false;
-            Settings.Default.SaveConsOnExit = false;
+            //Save settings to persist changes between application sessions
+            Properties.OptionsBackupPage.Default.Save();
         }
 
         private void ButtonBrowsePath_Click(object sender, EventArgs e)
         {
-            var saveDialog = DialogFactory.ConnectionsSaveAsDialog();
+            var selectFolderDialog = DialogFactory.SelectFolder(Language.lblConnectionsBackupPath);
+            txtConnectionsBackupPath.Text = selectFolderDialog.ShowDialog() == CommonFileDialogResult.Ok ? selectFolderDialog.FileName : txtConnectionsBackupPath.Text;
+        }
 
-            var dialogResult = saveDialog.ShowDialog(this);
-
-            textBoxConnectionBackupPath.Text = dialogResult == DialogResult.OK ? saveDialog.FileName : string.Empty;
+        private void rbBackupEnableDisable_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbBackupEnableDisable.Checked)
+            {
+                lblBackupType.Enabled = false;
+                pnlBackupType.Enabled = false;
+                lblMakeBackup.Enabled = false;
+                plMakeBackup.Enabled = false;
+                lblConnectionsBackupMaxCount.Enabled = false;
+                numMaxBackups.Enabled = false;
+                numMaxBackups.Value = 0;
+                lblBackupNameFormat.Enabled = false;
+                txtBackupNameFormat.Enabled = false;
+                lblConnectionsBackupPath.Enabled = false;
+                txtConnectionsBackupPath.Enabled = false;
+                btnBrowsePath.Enabled = false;
+                cbBackupTypeACL.Enabled = false;
+                cbBackupFrequencyACL.Enabled = false;
+                cbBackupNumberACL.Enabled = false;
+                cbBackupNameFormatACL.Enabled = false;
+                cbBackupLocationACL.Enabled = false;
+            }
+            else
+            {
+                lblBackupType.Enabled = true;
+                pnlBackupType.Enabled = true;
+                lblMakeBackup.Enabled = true;
+                plMakeBackup.Enabled = true;
+                lblConnectionsBackupMaxCount.Enabled = true;
+                numMaxBackups.Enabled = true;
+                numMaxBackups.Value = 10;
+                lblBackupNameFormat.Enabled = true;
+                txtBackupNameFormat.Enabled = true;
+                lblConnectionsBackupPath.Enabled = true;
+                txtConnectionsBackupPath.Enabled = true;
+                btnBrowsePath.Enabled = true;
+                cbBackupTypeACL.Enabled = true;
+                cbBackupFrequencyACL.Enabled = true;
+                cbBackupNumberACL.Enabled = true;
+                cbBackupNameFormatACL.Enabled = true;
+                cbBackupLocationACL.Enabled = true;
+            }
         }
     }
 }

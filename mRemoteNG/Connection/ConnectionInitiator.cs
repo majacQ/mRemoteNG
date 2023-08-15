@@ -62,6 +62,19 @@ namespace mRemoteNG.Connection
 
             try
             {
+                if (!string.IsNullOrEmpty(connectionInfo.EC2InstanceId))
+                {
+                    try
+                    {
+                        string host = await ExternalConnectors.AWS.EC2FetchDataService.GetEC2InstanceDataAsync("AWSAPI:" + connectionInfo.EC2InstanceId, connectionInfo.EC2Region);
+                        if (!string.IsNullOrEmpty(host))
+                            connectionInfo.Hostname = host;
+                    }
+                    catch
+                    {
+                    }
+                }
+
                 if (connectionInfo.Hostname == "" && connectionInfo.Protocol != ProtocolType.IntApp)
                 {
                     Runtime.MessageCollector.AddMessage(MessageClass.WarningMsg,
@@ -286,9 +299,7 @@ namespace mRemoteNG.Connection
 
         private static string SetConnectionPanel(ConnectionInfo connectionInfo, ConnectionInfo.Force force)
         {
-            if (connectionInfo.Panel != "" &&
-                !force.HasFlag(ConnectionInfo.Force.OverridePanel) &&
-                !Settings.Default.AlwaysShowPanelSelectionDlg)
+            if (connectionInfo.Panel != "" && !force.HasFlag(ConnectionInfo.Force.OverridePanel) && !Properties.OptionsTabsPanelsPage.Default.AlwaysShowPanelSelectionDlg)
                 return connectionInfo.Panel;
 
             var frmPnl = new FrmChoosePanel();

@@ -16,7 +16,6 @@ namespace mRemoteNG.Tools
         private readonly NotifyIcon _nI;
         private readonly ContextMenuStrip _cMen;
         private readonly ToolStripMenuItem _cMenCons;
-        private readonly IConnectionInitiator _connectionInitiator = new ConnectionInitiator();
         private static readonly FrmMain FrmMain = FrmMain.Default;
 
         public bool Disposed { get; private set; }
@@ -112,7 +111,7 @@ namespace mRemoteNG.Tools
             FrmMain.Show();
             FrmMain.WindowState = FrmMain.PreviousWindowState;
 
-            if (Settings.Default.ShowSystemTrayIcon) return;
+            if (Properties.OptionsAppearancePage.Default.ShowSystemTrayIcon) return;
             Runtime.NotificationAreaIcon.Dispose();
             Runtime.NotificationAreaIcon = null;
         }
@@ -129,7 +128,7 @@ namespace mRemoteNG.Tools
             if (((ToolStripMenuItem)sender).Tag is ContainerInfo) return;
             if (FrmMain.Visible == false)
                 ShowForm();
-            _connectionInitiator.OpenConnection((ConnectionInfo)((ToolStripMenuItem)sender).Tag);
+            Runtime.ConnectionInitiator.OpenConnection((ConnectionInfo)((ToolStripMenuItem)sender).Tag);
         }
 
         private static void cMenExit_Click(object sender, EventArgs e)

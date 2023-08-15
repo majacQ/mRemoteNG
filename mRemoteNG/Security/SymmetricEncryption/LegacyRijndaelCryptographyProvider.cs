@@ -24,37 +24,33 @@ namespace mRemoteNG.Security.SymmetricEncryption
             BlockSizeInBytes = 16;
         }
 
-
         public string Encrypt(string strToEncrypt, SecureString strSecret)
         {
-            if (strToEncrypt == "" || strSecret.Length == 0)
+            if (string.IsNullOrWhiteSpace(strToEncrypt) || strSecret.Length == 0)
                 return strToEncrypt;
 
             try
             {
-                var rd = new RijndaelManaged();
+                using var aes = Aes.Create();
+                aes.BlockSize = BlockSizeInBytes * 8;
 
-                var md5 = new MD5CryptoServiceProvider();
-                var key = md5.ComputeHash(Encoding.UTF8.GetBytes(strSecret.ConvertToUnsecureString()));
+                using (var md5 = MD5.Create())
+                {
+                    var key = md5.ComputeHash(Encoding.UTF8.GetBytes(strSecret.ConvertToUnsecureString()));
+                    aes.Key = key;
+                    aes.GenerateIV();
+                }
 
-                md5.Clear();
-                rd.Key = key;
-                rd.GenerateIV();
+                using var ms = new MemoryStream();
+                ms.Write(aes.IV, 0, BlockSizeInBytes);
 
-                var iv = rd.IV;
-                var ms = new MemoryStream();
-
-                ms.Write(iv, 0, iv.Length);
-
-                var cs = new CryptoStream(ms, rd.CreateEncryptor(), CryptoStreamMode.Write);
+                using var cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write);
                 var data = Encoding.UTF8.GetBytes(strToEncrypt);
 
                 cs.Write(data, 0, data.Length);
                 cs.FlushFinalBlock();
 
                 var encdata = ms.ToArray();
-                cs.Close();
-                rd.Clear();
 
                 return Convert.ToBase64String(encdata);
             }
@@ -74,31 +70,26 @@ namespace mRemoteNG.Security.SymmetricEncryption
 
             try
             {
-                var plaintext = "";
+                using var aes = Aes.Create();
+                aes.BlockSize = BlockSizeInBytes * 8;
 
-                using (var rijndaelManaged = new RijndaelManaged())
+                using (var md5 = MD5.Create())
                 {
-                    using (var md5 = new MD5CryptoServiceProvider())
-                    {
-                        var key = md5.ComputeHash(Encoding.UTF8.GetBytes(password.ConvertToUnsecureString()));
-                        rijndaelManaged.Key = key;
-                    }
+                    var key = md5.ComputeHash(Encoding.UTF8.GetBytes(password.ConvertToUnsecureString()));
+                    aes.Key = key;
+                }
 
-                    var ciphertext = Convert.FromBase64String(ciphertextBase64);
+                var ciphertext = Convert.FromBase64String(ciphertextBase64);
 
-                    var memoryStream = new MemoryStream(ciphertext);
-                    var iv = new byte[BlockSizeInBytes];
-                    memoryStream.Read(iv, 0, iv.Length);
-                    rijndaelManaged.IV = iv;
+                using var ms = new MemoryStream(ciphertext);
 
-                    var cryptoStream = new CryptoStream(memoryStream, rijndaelManaged.CreateDecryptor(),
-                                                        CryptoStreamMode.Read);
-                    using (var streamReader = new StreamReader(cryptoStream, Encoding.UTF8, true))
-                    {
-                        plaintext = streamReader.ReadToEnd();
-                        rijndaelManaged.Clear();
-                    }
-                } // rijndaelManaged
+                var iv = new byte[BlockSizeInBytes];
+                ms.Read(iv, 0, iv.Length);
+                aes.IV = iv;
+
+                using var cryptoStream = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read);
+                using var streamReader = new StreamReader(cryptoStream, Encoding.UTF8, true);
+                var plaintext = streamReader.ReadToEnd();
 
                 return plaintext;
             }

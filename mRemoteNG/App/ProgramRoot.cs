@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Threading;
+using System.Windows;
 using System.Windows.Forms;
 using mRemoteNG.Properties;
 using mRemoteNG.UI.Forms;
@@ -17,7 +19,7 @@ namespace mRemoteNG.App
         [STAThread]
         public static void Main(string[] args)
         {
-            if (Settings.Default.SingleInstance)
+            if (Properties.OptionsStartupExitPage.Default.SingleInstance)
                 StartApplicationAsSingleInstance();
             else
                 StartApplication();
@@ -26,11 +28,23 @@ namespace mRemoteNG.App
         private static void StartApplication()
         {
             CatchAllUnhandledExceptions();
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            var frmSplashScreen = FrmSplashScreen.getInstance();
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+
+            var frmSplashScreen = FrmSplashScreenNew.GetInstance();
+
+            Screen targetScreen = (Screen.AllScreens.Length > 1) ? Screen.AllScreens[1] : Screen.AllScreens[0];
+
+            Rectangle viewport = targetScreen.WorkingArea;
+            frmSplashScreen.Top = viewport.Top;
+            frmSplashScreen.Left = viewport.Left;
+            // normaly it should be screens[1] however due DPI apply 1 size "same" as default with 100%
+                frmSplashScreen.Left = viewport.Left + (targetScreen.Bounds.Size.Width / 2) - (frmSplashScreen.Width / 2);
+                frmSplashScreen.Top = viewport.Top + (targetScreen.Bounds.Size.Height / 2) - (frmSplashScreen.Height / 2);
+            
             frmSplashScreen.Show();
-            Application.Run(FrmMain.Default);
+            
+            System.Windows.Forms.Application.Run(FrmMain.Default);
         }
 
         public static void CloseSingletonInstanceMutex()
@@ -78,15 +92,15 @@ namespace mRemoteNG.App
 
         private static void CatchAllUnhandledExceptions()
         {
-            Application.ThreadException += ApplicationOnThreadException;
-            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            System.Windows.Forms.Application.ThreadException += ApplicationOnThreadException;
+            System.Windows.Forms.Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
         }
 
         private static void ApplicationOnThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            if (!FrmSplashScreen.getInstance().IsDisposed)
-                FrmSplashScreen.getInstance().Close();
+           // if (PresentationSource.FromVisual(FrmSplashScreenNew))
+                FrmSplashScreenNew.GetInstance().Close();
 
             if (FrmMain.Default.IsDisposed) return;
             
@@ -97,8 +111,9 @@ namespace mRemoteNG.App
 
         private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if (!FrmSplashScreen.getInstance().IsDisposed)
-                FrmSplashScreen.getInstance().Close();
+            //TODO: Check if splash closed properly
+            //if (!FrmSplashScreenNew.GetInstance().IsDisposed)
+            //    FrmSplashScreenNew.GetInstance().Close();
 
             var window = new FrmUnhandledException(e.ExceptionObject as Exception, e.IsTerminating);
             window.ShowDialog(FrmMain.Default);

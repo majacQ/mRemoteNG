@@ -78,23 +78,30 @@ namespace mRemoteNG.Connection
 
                 if (connectionString.Contains("@"))
                 {
-                    string[] x = connectionString.Split('@');
+                    var x = connectionString.Split('@');
                     uriBuilder.UserName = x[0];
-                    uriBuilder.Host = x[1];
+                    connectionString = x[1];
                 }
-                else
-                    uriBuilder.Host = connectionString;
-                
+                if (connectionString.Contains(":"))
+                {
+                    var x = connectionString.Split(':');
+                    connectionString = x[0];
+                    uriBuilder.Port = Convert.ToInt32(x[1]);
+                }
+
+                uriBuilder.Host = connectionString;
+
                 var newConnectionInfo = new ConnectionInfo();
                 newConnectionInfo.CopyFrom(DefaultConnectionInfo.Instance);
 
-                newConnectionInfo.Name = Settings.Default.IdentifyQuickConnectTabs
+                newConnectionInfo.Name = Properties.OptionsTabsPanelsPage.Default.IdentifyQuickConnectTabs
                     ? string.Format(Language.Quick, uriBuilder.Host)
                     : uriBuilder.Host;
 
                 newConnectionInfo.Protocol = protocol;
                 newConnectionInfo.Hostname = uriBuilder.Host;
                 newConnectionInfo.Username = uriBuilder.UserName;
+
                 if (uriBuilder.Port == -1)
                 {
                     newConnectionInfo.SetDefaultPort();
@@ -131,8 +138,7 @@ namespace mRemoteNG.Connection
             var oldIsUsingDatabaseValue = UsingDatabase;
 
             var connectionLoader = useDatabase
-                ? (IConnectionsLoader)new SqlConnectionsLoader(_localConnectionPropertiesSerializer,
-                                                               _localConnectionPropertiesDataProvider)
+                ? (IConnectionsLoader)new SqlConnectionsLoader(_localConnectionPropertiesSerializer, _localConnectionPropertiesDataProvider)
                 : new XmlConnectionsLoader(connectionFileName);
 
             var newConnectionTreeModel = connectionLoader.Load();
@@ -142,8 +148,7 @@ namespace mRemoteNG.Connection
 
             if (newConnectionTreeModel == null)
             {
-                DialogFactory.ShowLoadConnectionsFailedDialog(connectionFileName, "Decrypting connection file failed",
-                                                              IsConnectionsFileLoaded);
+                DialogFactory.ShowLoadConnectionsFailedDialog(connectionFileName, "Decrypting connection file failed", IsConnectionsFileLoaded);
                 return;
             }
 
@@ -159,10 +164,8 @@ namespace mRemoteNG.Connection
 
             ConnectionTreeModel = newConnectionTreeModel;
             UpdateCustomConsPathSetting(connectionFileName);
-            RaiseConnectionsLoadedEvent(oldConnectionTreeModel, newConnectionTreeModel, oldIsUsingDatabaseValue,
-                                        useDatabase, connectionFileName);
-            Runtime.MessageCollector.AddMessage(MessageClass.DebugMsg,
-                                                $"Connections loaded using {connectionLoader.GetType().Name}");
+            RaiseConnectionsLoadedEvent(oldConnectionTreeModel, newConnectionTreeModel, oldIsUsingDatabaseValue, useDatabase, connectionFileName);
+            Runtime.MessageCollector.AddMessage(MessageClass.DebugMsg, $"Connections loaded using {connectionLoader.GetType().Name}");
         }
 
         /// <summary>
@@ -226,12 +229,7 @@ namespace mRemoteNG.Connection
         /// Optional. The name of the property that triggered
         /// this save.
         /// </param>
-        public void SaveConnections(ConnectionTreeModel connectionTreeModel,
-                                    bool useDatabase,
-                                    SaveFilter saveFilter,
-                                    string connectionFileName,
-                                    bool forceSave = false,
-                                    string propertyNameTrigger = "")
+        public void SaveConnections(ConnectionTreeModel connectionTreeModel, bool useDatabase, SaveFilter saveFilter, string connectionFileName, bool forceSave = false, string propertyNameTrigger = "")
         {
             if (connectionTreeModel == null)
                 return;
@@ -253,9 +251,7 @@ namespace mRemoteNG.Connection
                 var previouslyUsingDatabase = UsingDatabase;
 
                 var saver = useDatabase
-                    ? (ISaver<ConnectionTreeModel>)new SqlConnectionsSaver(saveFilter,
-                                                                           _localConnectionPropertiesSerializer,
-                                                                           _localConnectionPropertiesDataProvider)
+                    ? (ISaver<ConnectionTreeModel>)new SqlConnectionsSaver(saveFilter, _localConnectionPropertiesSerializer, _localConnectionPropertiesDataProvider)
                     : new XmlConnectionsSaver(connectionFileName, saveFilter);
 
                 saver.Save(connectionTreeModel, propertyNameTrigger);
@@ -271,9 +267,7 @@ namespace mRemoteNG.Connection
             }
             catch (Exception ex)
             {
-                Runtime.MessageCollector?.AddExceptionMessage(
-                                                              string.Format(Language.ConnectionsFileCouldNotSaveAs,
-                                                                            connectionFileName), ex, logOnly: false);
+                Runtime.MessageCollector?.AddExceptionMessage(string.Format(Language.ConnectionsFileCouldNotSaveAs, connectionFileName), ex, logOnly: false);
             }
             finally
             {
@@ -300,12 +294,7 @@ namespace mRemoteNG.Connection
             {
                 lock (SaveLock)
                 {
-                    SaveConnections(
-                                    ConnectionTreeModel,
-                                    UsingDatabase,
-                                    new SaveFilter(),
-                                    ConnectionFileName,
-                                    propertyNameTrigger: propertyNameTrigger);
+                    SaveConnections(ConnectionTreeModel, UsingDatabase, new SaveFilter(), ConnectionFileName, propertyNameTrigger: propertyNameTrigger);
                 }
             });
             t.SetApartmentState(ApartmentState.STA);
@@ -314,37 +303,45 @@ namespace mRemoteNG.Connection
 
         public string GetStartupConnectionFileName()
         {
-            return Settings.Default.LoadConsFromCustomLocation == false
-                ? GetDefaultStartupConnectionFileName()
-                : Settings.Default.CustomConsPath;
+            /*
+            if (Properties.OptionsBackupPage.Default.LoadConsFromCustomLocation == true && Properties.OptionsBackupPage.Default.BackupLocation != "")
+            {
+                return Properties.OptionsBackupPage.Default.BackupLocation;
+            } else {
+                return GetDefaultStartupConnectionFileName();
+            }
+            */
+            if (Properties.OptionsConnectionsPage.Default.ConnectrionFilePath != "")
+            {
+                return Properties.OptionsConnectionsPage.Default.ConnectrionFilePath;
+            }
+            else
+            {
+                return GetDefaultStartupConnectionFileName();
+            }
         }
 
         public string GetDefaultStartupConnectionFileName()
         {
-            return Runtime.IsPortableEdition
-                ? GetDefaultStartupConnectionFileNamePortableEdition()
-                : GetDefaultStartupConnectionFileNameNormalEdition();
+            return Runtime.IsPortableEdition ? GetDefaultStartupConnectionFileNamePortableEdition() : GetDefaultStartupConnectionFileNameNormalEdition();
         }
 
         private void UpdateCustomConsPathSetting(string filename)
         {
             if (filename == GetDefaultStartupConnectionFileName())
             {
-                Settings.Default.LoadConsFromCustomLocation = false;
+                Properties.OptionsBackupPage.Default.LoadConsFromCustomLocation = false;
             }
             else
             {
-                Settings.Default.LoadConsFromCustomLocation = true;
-                Settings.Default.CustomConsPath = filename;
+                Properties.OptionsBackupPage.Default.LoadConsFromCustomLocation = true;
+                Properties.OptionsBackupPage.Default.BackupLocation = filename;
             }
         }
 
         private string GetDefaultStartupConnectionFileNameNormalEdition()
         {
-            var appDataPath = Path.Combine(
-                                           Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                                           Application.ProductName,
-                                           ConnectionsFileInfo.DefaultConnectionsFile);
+            var appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Application.ProductName, ConnectionsFileInfo.DefaultConnectionsFile);
             return File.Exists(appDataPath) ? appDataPath : GetDefaultStartupConnectionFileNamePortableEdition();
         }
 
@@ -358,29 +355,14 @@ namespace mRemoteNG.Connection
         public event EventHandler<ConnectionsLoadedEventArgs> ConnectionsLoaded;
         public event EventHandler<ConnectionsSavedEventArgs> ConnectionsSaved;
 
-        private void RaiseConnectionsLoadedEvent(Optional<ConnectionTreeModel> previousTreeModel,
-                                                 ConnectionTreeModel newTreeModel,
-                                                 bool previousSourceWasDatabase,
-                                                 bool newSourceIsDatabase,
-                                                 string newSourcePath)
+        private void RaiseConnectionsLoadedEvent(Optional<ConnectionTreeModel> previousTreeModel, ConnectionTreeModel newTreeModel, bool previousSourceWasDatabase, bool newSourceIsDatabase, string newSourcePath)
         {
-            ConnectionsLoaded?.Invoke(this, new ConnectionsLoadedEventArgs(
-                                                                           previousTreeModel,
-                                                                           newTreeModel,
-                                                                           previousSourceWasDatabase,
-                                                                           newSourceIsDatabase,
-                                                                           newSourcePath));
+            ConnectionsLoaded?.Invoke(this, new ConnectionsLoadedEventArgs(previousTreeModel, newTreeModel, previousSourceWasDatabase, newSourceIsDatabase, newSourcePath));
         }
 
-        private void RaiseConnectionsSavedEvent(ConnectionTreeModel modelThatWasSaved,
-                                                bool previouslyUsingDatabase,
-                                                bool usingDatabase,
-                                                string connectionFileName)
+        private void RaiseConnectionsSavedEvent(ConnectionTreeModel modelThatWasSaved, bool previouslyUsingDatabase, bool usingDatabase, string connectionFileName)
         {
-            ConnectionsSaved?.Invoke(this,
-                                     new ConnectionsSavedEventArgs(modelThatWasSaved, previouslyUsingDatabase,
-                                                                   usingDatabase,
-                                                                   connectionFileName));
+            ConnectionsSaved?.Invoke(this, new ConnectionsSavedEventArgs(modelThatWasSaved, previouslyUsingDatabase, usingDatabase, connectionFileName));
         }
 
         #endregion

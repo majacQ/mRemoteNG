@@ -288,8 +288,8 @@ namespace mRemoteNG.Connection.Protocol.RDP
             _rdpClient.AdvancedSettings2.MinutesToIdleTimeout = connectionInfo.RDPMinutesToIdleTimeout;
 
             #region Remote Desktop Services
-            _rdpClient.SecuredSettings2.StartProgram = connectionInfo.StartProgram;
-            _rdpClient.SecuredSettings2.WorkDir = connectionInfo.StartProgramWorkDir;
+            _rdpClient.SecuredSettings2.StartProgram = connectionInfo.RDPStartProgram;
+            _rdpClient.SecuredSettings2.WorkDir = connectionInfo.RDPStartProgramWorkDir;
             #endregion
 
             //not user changeable
@@ -306,6 +306,16 @@ namespace mRemoteNG.Connection.Protocol.RDP
             if (_rdpVersion >= Versions.RDC61)
             {
                 _rdpClient.AdvancedSettings7.EnableCredSspSupport = connectionInfo.UseCredSsp;
+            }
+            if(_rdpVersion >= Versions.RDC81)
+            {
+                if (connectionInfo.UseRestrictedAdmin)
+                    SetExtendedProperty("RestrictedLogon", true);
+                else if (connectionInfo.UseRCG)
+                {
+                    SetExtendedProperty("DisableCredentialsDelegation", true);
+                    SetExtendedProperty("RedirectedAuthentication", true);
+                }
             }
 
             SetUseConsoleSession();
@@ -463,13 +473,14 @@ namespace mRemoteNG.Connection.Protocol.RDP
                 var userName = connectionInfo?.Username ?? "";
                 var password = connectionInfo?.Password ?? "";
                 var domain = connectionInfo?.Domain ?? "";
+                var UserViaAPI = connectionInfo?.UserViaAPI ?? "";
 
                 // access secret server api if necessary
-                if (userName.StartsWith("SSAPI:"))
+                if (!string.IsNullOrEmpty(UserViaAPI))
                 {
                     try
                     {
-                        ExternalConnectors.TSS.SecretServerInterface.FetchSecretFromServer(userName, out userName, out password, out domain);
+                        ExternalConnectors.TSS.SecretServerInterface.FetchSecretFromServer("SSAPI:" + connectionInfo?.UserViaAPI, out userName, out password, out domain);
                     }
                     catch (Exception ex)
                     {
@@ -480,13 +491,26 @@ namespace mRemoteNG.Connection.Protocol.RDP
 
                 if (string.IsNullOrEmpty(userName))
                 {
-                    if (Settings.Default.EmptyCredentials == "windows")
+                    switch (Properties.OptionsCredentialsPage.Default.EmptyCredentials)
                     {
-                        _rdpClient.UserName = Environment.UserName;
-                    }
-                    else if (Settings.Default.EmptyCredentials == "custom")
-                    {
-                        _rdpClient.UserName = Settings.Default.DefaultUsername;
+                        case "windows":
+                            _rdpClient.UserName = Environment.UserName;
+                            break;
+                        case "custom" when !string.IsNullOrEmpty(Properties.OptionsCredentialsPage.Default.DefaultUsername):
+                            _rdpClient.UserName = Properties.OptionsCredentialsPage.Default.DefaultUsername;
+                            break;
+                        case "custom":
+                            try
+                            {
+                                ExternalConnectors.TSS.SecretServerInterface.FetchSecretFromServer("SSAPI:" + Properties.OptionsCredentialsPage.Default.UserViaAPDefault, out userName, out password, out domain);
+                                _rdpClient.UserName = userName;
+                            }
+                            catch (Exception ex)
+                            {
+                                Event_ErrorOccured(this, "Secret Server Interface Error: " + ex.Message, 0);
+                            }
+
+                            break;
                     }
                 }
                 else
@@ -496,13 +520,12 @@ namespace mRemoteNG.Connection.Protocol.RDP
 
                 if (string.IsNullOrEmpty(password))
                 {
-                    if (Settings.Default.EmptyCredentials == "custom")
+                    if (Properties.OptionsCredentialsPage.Default.EmptyCredentials == "custom")
                     {
-                        if (Settings.Default.DefaultPassword != "")
+                        if (Properties.OptionsCredentialsPage.Default.DefaultPassword != "")
                         {
                             var cryptographyProvider = new LegacyRijndaelCryptographyProvider();
-                            _rdpClient.AdvancedSettings2.ClearTextPassword =
-                                cryptographyProvider.Decrypt(Settings.Default.DefaultPassword, Runtime.EncryptionKey);
+                            _rdpClient.AdvancedSettings2.ClearTextPassword = cryptographyProvider.Decrypt(Properties.OptionsCredentialsPage.Default.DefaultPassword, Runtime.EncryptionKey);
                         }
                     }
                 }
@@ -513,14 +536,12 @@ namespace mRemoteNG.Connection.Protocol.RDP
 
                 if (string.IsNullOrEmpty(domain))
                 {
-                    if (Settings.Default.EmptyCredentials == "windows")
+                    _rdpClient.Domain = Properties.OptionsCredentialsPage.Default.EmptyCredentials switch
                     {
-                        _rdpClient.Domain = Environment.UserDomainName;
-                    }
-                    else if (Settings.Default.EmptyCredentials == "custom")
-                    {
-                        _rdpClient.Domain = Settings.Default.DefaultDomain;
-                    }
+                        "windows" => Environment.UserDomainName,
+                        "custom" => Properties.OptionsCredentialsPage.Default.DefaultDomain,
+                        _ => _rdpClient.Domain
+                    };
                 }
                 else
                 {
@@ -728,7 +749,7 @@ namespace mRemoteNG.Connection.Protocol.RDP
                 Event_Disconnected(this, reason, discReason);
             }
 
-            if (Settings.Default.ReconnectOnDisconnect)
+            if (Properties.OptionsAdvancedPage.Default.ReconnectOnDisconnect)
             {
                 ReconnectGroup = new ReconnectGroup();
                 ReconnectGroup.CloseClicked += Event_ReconnectGroupCloseClicked;

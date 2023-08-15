@@ -29,6 +29,9 @@ Welcome to mRemoteNG's documentation!
    howtos/external_tools.rst
    howtos/bulk_connections.rst
    howtos/vmrdp.rst
+   howtos/credvault.rst
+   howtos/dynamic_host.rst
+   howtos/cyberark-psm.rst
 
 .. toctree::
    :maxdepth: 2

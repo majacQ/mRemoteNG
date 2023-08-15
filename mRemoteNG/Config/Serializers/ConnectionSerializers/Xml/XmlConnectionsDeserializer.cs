@@ -44,6 +44,7 @@ namespace mRemoteNG.Config.Serializers.ConnectionSerializers.Xml
 
         public ConnectionTreeModel Deserialize(string xml, bool import)
         {
+            if (string.IsNullOrEmpty(xml)) return null;
             try
             {
                 LoadXmlConnectionData(xml);
@@ -95,9 +96,11 @@ namespace mRemoteNG.Config.Serializers.ConnectionSerializers.Xml
         {
             CreateDecryptor(new RootNodeInfo(RootNodeType.Connection));
             connections = _decryptor.LegacyFullFileDecrypt(connections);
-            _xmlDocument = new XmlDocument();
             if (connections != "")
+            {
+                _xmlDocument = new XmlDocument();
                 _xmlDocument.LoadXml(connections);
+            }
         }
 
         private void ValidateConnectionFileVersion()
@@ -541,13 +544,14 @@ namespace mRemoteNG.Config.Serializers.ConnectionSerializers.Xml
                     connectionInfo.SSHTunnelConnectionName = xmlnode.GetAttributeAsString("SSHTunnelConnectionName");
                     connectionInfo.OpeningCommand = xmlnode.GetAttributeAsString("OpeningCommand");
                     connectionInfo.SSHOptions = xmlnode.GetAttributeAsString("SSHOptions");
-                    connectionInfo.StartProgram = xmlnode.GetAttributeAsString("StartProgram");
+                    connectionInfo.RDPStartProgram = xmlnode.GetAttributeAsString("StartProgram");
+                    connectionInfo.RDPStartProgramWorkDir = xmlnode.GetAttributeAsString("StartProgramWorkDir");
                     connectionInfo.DisableFullWindowDrag = xmlnode.GetAttributeAsBool("DisableFullWindowDrag");
                     connectionInfo.DisableMenuAnimations = xmlnode.GetAttributeAsBool("DisableMenuAnimations");
                     connectionInfo.DisableCursorShadow = xmlnode.GetAttributeAsBool("DisableCursorShadow");
                     connectionInfo.DisableCursorBlinking = xmlnode.GetAttributeAsBool("DisableCursorBlinking");
-                    connectionInfo.StartProgram = xmlnode.GetAttributeAsString("StartProgram");
-                    connectionInfo.StartProgramWorkDir = xmlnode.GetAttributeAsString("StartProgramWorkDir");
+                    connectionInfo.RDPStartProgram = xmlnode.GetAttributeAsString("StartProgram");
+                    connectionInfo.RDPStartProgramWorkDir = xmlnode.GetAttributeAsString("StartProgramWorkDir");
                     connectionInfo.Inheritance.RedirectClipboard = xmlnode.GetAttributeAsBool("InheritRedirectClipboard");
                     connectionInfo.Inheritance.Favorite = xmlnode.GetAttributeAsBool("InheritFavorite");
                     connectionInfo.Inheritance.RdpVersion = xmlnode.GetAttributeAsBool("InheritRdpVersion");
@@ -561,8 +565,15 @@ namespace mRemoteNG.Config.Serializers.ConnectionSerializers.Xml
                     connectionInfo.Inheritance.DisableMenuAnimations = xmlnode.GetAttributeAsBool("InheritDisableMenuAnimations");
                     connectionInfo.Inheritance.DisableCursorShadow = xmlnode.GetAttributeAsBool("InheritDisableCursorShadow");
                     connectionInfo.Inheritance.DisableCursorBlinking = xmlnode.GetAttributeAsBool("InheritDisableCursorBlinking");
+                    connectionInfo.UserViaAPI = xmlnode.GetAttributeAsString("UserViaAPI");
+                    connectionInfo.Inheritance.UserViaAPI = xmlnode.GetAttributeAsBool("InheritUserViaAPI");
+                    connectionInfo.EC2InstanceId = xmlnode.GetAttributeAsString("EC2InstanceId");
+                    connectionInfo.EC2Region = xmlnode.GetAttributeAsString("EC2Region");
+                    connectionInfo.UseRestrictedAdmin = xmlnode.GetAttributeAsBool("UseRestrictedAdmin");
+                    connectionInfo.Inheritance.UseRestrictedAdmin = xmlnode.GetAttributeAsBool("InheritUseRestrictedAdmin");
+                    connectionInfo.UseRCG = xmlnode.GetAttributeAsBool("UseRCG");
+                    connectionInfo.Inheritance.UseRCG = xmlnode.GetAttributeAsBool("InheritUseRCG");
                 }
-                
             }
             catch (Exception ex)
             {
